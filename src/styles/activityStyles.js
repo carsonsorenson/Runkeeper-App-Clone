@@ -10,12 +10,12 @@ export default mainStyles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         width: '100%',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-evenly',
     },
     row: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     bigText: {
         fontSize: 60,

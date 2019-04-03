@@ -31,3 +31,21 @@ export function updateDistance(distance) {
         }
     }
 }
+
+export function pause(isPaused) {
+    return {
+        type: SET_ACTIVITY,
+        payload: {
+            paused: !isPaused
+        }
+    }
+}
+
+export function updatePace(pace) {
+    return {
+        type: SET_ACTIVITY,
+        payload: {
+            pace
+        }
+    }
+}

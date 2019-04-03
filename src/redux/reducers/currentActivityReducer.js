@@ -5,7 +5,8 @@ let initialState = {
     initialLongitude: null,
     activity: null,
     duration: 0,
-    distance: 0,
+    distance: 0.00,
+    pace: 0,
     finalLatitude: null,
     finalLongitude: null,
     paused: false

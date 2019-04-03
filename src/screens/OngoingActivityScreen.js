@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { Text, Button } from 'native-base';
 import { connect } from 'react-redux';
-import { initializeActivity, updateDistance } from '../redux/actions/currentActivityActions';
-import Timer from '../components/Timer';
-import Distance from '../components/Distance';
-import Pace from '../components/Pace';
-import styles from '../styles/activityStyles';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { initializeActivity, updateDistance, updatePace, pause } from '../redux/actions/currentActivityActions';
+import CurrentActivityLayout from '../components/CurrentActivityLayout';
 
 class OngoingActivityScreen extends Component {
     static navigationOptions = {
@@ -29,6 +23,16 @@ class OngoingActivityScreen extends Component {
             this.props.longitude,
             this.props.navigation.getParam("activity")
         )
+        this.play();
+    }
+
+    pause() {
+        clearInterval(this.state.timer);
+        this.setState({timer:null});
+        this.props.dispatchPause(false);
+    }
+
+    play() {
         let timer = setInterval(() => {
             this.setState((prevState) => {
                 return {
@@ -37,9 +41,10 @@ class OngoingActivityScreen extends Component {
             });
         }, 1000);
         this.setState({timer});
+        this.props.dispatchPause(true);
     }
 
-    caluculateDistance(prevLatitude, prevLongitude) {
+    calculateDistance(prevLatitude, prevLongitude) {
         if (this.props.currentActivity.paused === false) {
             var latitudeOne = this.toRadians(this.props.latitude);
             var latitudeTwo = this.toRadians(prevLatitude);
@@ -55,53 +60,39 @@ class OngoingActivityScreen extends Component {
         }
     }
 
+    calculatePace() {
+        var pace = 0;
+        if (this.props.currentActivity.distance > 0) {
+            pace = this.state.time / this.props.currentActivity.distance;
+        }
+        if (pace != this.props.currentActivity.pace) {
+            this.props.dispatchUpdatePace(pace);
+        }
+    }
+
     toRadians(v) {
         return v * Math.PI / 180;
     }
 
-    componentDidUpdate(prevProps) {
+    componentDidUpdate(prevProps, prevState) {
         if (this.props.latitude !== prevProps.latitude || this.props.longitude !== prevProps.longitude) {
-            console.log(this.props);
-            this.caluculateDistance(prevProps.latitude, prevProps.longitude);
+            this.calculateDistance(prevProps.latitude, prevProps.longitude);
+        }
+        if (this.state.time !== prevState.time) {
+            this.calculatePace();
         }
     }
 
     render() {
         return (
-            <View style={styles.container}>
-                <View style={styles.row}>
-                    <Timer time={this.state.time} />
-                </View>
-                <View style={styles.row}>
-                    <Distance distance={this.props.currentActivity.distance} />
-                </View>
-                <View style={styles.row}>
-                    <Pace pace={0} />
-                </View>
-                <View style={[styles.row, styles.buttonContainer]}>
-                    <Button style={[styles.rounded, {backgroundColor: 'green'}]}>
-                        <Icon
-                            name="play"
-                            size={40}
-                            color="#fff"
-                        />
-                    </Button>
-                    <Button style={[styles.rounded, {backgroundColor: 'orange'}]}>
-                        <Icon
-                            name="pause"
-                            size={40}
-                            color="#fff"
-                        />
-                    </Button>
-                    <Button style={[styles.rounded, {backgroundColor: 'red'}]}>
-                        <Icon
-                            name="stop"
-                            size={40}
-                            color="#fff"
-                        />
-                    </Button>
-                </View>
-            </View>
+            <CurrentActivityLayout
+                time={this.state.time}
+                distance={this.props.currentActivity.distance}
+                pace={this.props.currentActivity.pace}
+                paused={this.props.currentActivity.paused}
+                play={() => this.play()}
+                pause={() => this.pause()}
+            />
         )
     }
 
@@ -123,6 +114,8 @@ function mapDispatchToProps(dispatch) {
     return {
         dispatchInitializeActivity: (lat, lon, activity) => dispatch(initializeActivity(lat, lon, activity)),
         dispatchUpdateDistance: (dis) => dispatch(updateDistance(dis)),
+        dispatchPause: (isPaused) => dispatch(pause(isPaused)),
+        dispatchUpdatePace: (pace) => dispatch(updatePace(pace))
     }
 }
 
