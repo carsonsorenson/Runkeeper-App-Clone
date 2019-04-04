@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Text } from 'native-base';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { finalPosition } from '../redux/actions/currentActivityActions';
 import SummaryBar from '../components/SummaryBar';
+import Feeling from '../components/Feeling';
 
 class EndActivityScreen extends Component {
     static navigationOptions = {
@@ -23,11 +24,14 @@ class EndActivityScreen extends Component {
     render() {
         console.log(this.props);
         return (
-            <SummaryBar
-                distance={this.props.currentActivity.distance}
-                time={this.props.currentActivity.time}
-                pace={this.props.currentActivity.pace}
-            />
+            <View>
+                <SummaryBar
+                    distance={this.props.currentActivity.distance}
+                    time={this.props.currentActivity.time}
+                    pace={this.props.currentActivity.pace}
+                />
+                <Feeling />
+            </View>
         )
     }
 }

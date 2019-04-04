@@ -33,7 +33,19 @@ export default mainStyles = StyleSheet.create({
     },
     summaryContainer: {
         height: 100,
-        backgroundColor: 'green',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+
+    },
+    summary: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    summaryText: {
+        fontSize: 35,
+        fontWeight: '100',
+        alignSelf: 'center'
     }
 });

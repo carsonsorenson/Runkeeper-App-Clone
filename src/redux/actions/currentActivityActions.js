@@ -6,6 +6,15 @@ export {
     START_ACTIVITY,
 }
 
+export function setFeeling(feeling) {
+    return {
+        type: SET_ACTIVITY,
+        payload: {
+            feeling
+        }
+    }
+}
+
 export function updateTime(time) {
     return {
         type: SET_ACTIVITY,

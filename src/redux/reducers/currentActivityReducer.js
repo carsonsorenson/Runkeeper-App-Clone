@@ -12,6 +12,7 @@ let initialState = {
     finalLatitude: null,
     finalLongitude: null,
     finalWeather: null,
+    feeling: null,
     paused: false
 };
 
