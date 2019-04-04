@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { Button, H3 } from 'native-base';
 import { connect } from 'react-redux';
 import { finalPosition, finalWeather } from '../redux/actions/currentActivityActions';
 import SummaryBar from '../components/SummaryBar';
 import Feeling from '../components/Feeling';
 import WeatherCompare from '../components/WeatherCompare';
 import weatherService from '../services/weather.service';
+import styles from '../styles/activityStyles';
 
 class EndActivityScreen extends Component {
     static navigationOptions = {
@@ -43,6 +45,11 @@ class EndActivityScreen extends Component {
                     initialWeather={this.props.currentActivity.initialWeather}
                     finalWeather={this.props.currentActivity.finalWeather}
                 />
+                <Button style={styles.button}>
+                    <H3 style={{color: 'white'}}>
+                        Save Activity
+                    </H3>
+                </Button>
             </View>
         )
     }

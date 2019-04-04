@@ -74,5 +74,13 @@ export default mainStyles = StyleSheet.create({
     },
     weatherText: {
         color: 'white'
+    },
+    button: {
+        width: '100%',
+        backgroundColor: '#f64c72',
+        justifyContent: 'center',
+        padding: 10,
+        position: 'absolute',
+        bottom: 0
     }
 });
