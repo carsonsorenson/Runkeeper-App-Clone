@@ -59,5 +59,20 @@ export default mainStyles = StyleSheet.create({
     feelingText: {
         alignSelf: 'center',
         padding: 15
+    },
+    weatherContainer: {
+        flexDirection: 'row',
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+        backgroundColor: '#3BB9FF'
+    },
+    weatherBox: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20
+    },
+    weatherText: {
+        color: 'white'
     }
 });

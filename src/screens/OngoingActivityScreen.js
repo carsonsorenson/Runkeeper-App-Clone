@@ -65,7 +65,7 @@ class OngoingActivityScreen extends Component {
     calculatePace() {
         var pace = 0;
         if (this.props.currentActivity.distance > 0) {
-            pace = this.state.time / this.props.currentActivity.distance;
+            pace = this.props.currentActivity.time / this.props.currentActivity.distance;
         }
         if (pace != this.props.currentActivity.pace) {
             this.props.dispatchUpdatePace(pace);
@@ -80,7 +80,7 @@ class OngoingActivityScreen extends Component {
         if (this.props.latitude !== prevProps.latitude || this.props.longitude !== prevProps.longitude) {
             this.calculateDistance(prevProps.latitude, prevProps.longitude);
         }
-        if (this.state.time !== prevState.time) {
+        if (this.props.currentActivity.time !== prevProps.currentActivity.time) {
             this.calculatePace();
         }
     }

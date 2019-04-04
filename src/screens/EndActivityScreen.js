@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { finalPosition } from '../redux/actions/currentActivityActions';
+import { finalPosition, finalWeather } from '../redux/actions/currentActivityActions';
 import SummaryBar from '../components/SummaryBar';
 import Feeling from '../components/Feeling';
+import WeatherCompare from '../components/WeatherCompare';
+import weatherService from '../services/weather.service';
 
 class EndActivityScreen extends Component {
     static navigationOptions = {
@@ -19,10 +21,16 @@ class EndActivityScreen extends Component {
             this.props.latitude,
             this.props.longitude
         )
+        weatherService.getWeather(this.props.latitude, this.props.longitude)
+        .then(results => {
+            this.props.dispatchFinalWeather(results);
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     render() {
-        console.log(this.props);
         return (
             <View>
                 <SummaryBar
@@ -31,6 +39,10 @@ class EndActivityScreen extends Component {
                     pace={this.props.currentActivity.pace}
                 />
                 <Feeling />
+                <WeatherCompare
+                    initialWeather={this.props.currentActivity.initialWeather}
+                    finalWeather={this.props.currentActivity.finalWeather}
+                />
             </View>
         )
     }
@@ -47,6 +59,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         dispatchFinalPosition: (lat, lon) => dispatch(finalPosition(lat, lon)),
+        dispatchFinalWeather: (weather) => dispatch(finalWeather(weather))
     }
 }
 

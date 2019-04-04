@@ -6,6 +6,20 @@ export {
     START_ACTIVITY,
 }
 
+export function finalWeather(weather) {
+    let finalWeather = {
+        description: weather.description,
+        icon: weather.getIcon(),
+        temp: weather.temp
+    }
+    return {
+        type: SET_ACTIVITY,
+        payload: {
+            finalWeather
+        }
+    }
+}
+
 export function setFeeling(feeling) {
     return {
         type: SET_ACTIVITY,
@@ -34,7 +48,12 @@ export function finalPosition(finalLatitude, finalLongitude) {
     }
 }
 
-export function initializeActivity(initialLatitude, initialLongitude, activity, weather) {
+export function initializeActivity(initialLatitude, initialLongitude, activity, w) {
+    let weather = {
+        description: w.description,
+        icon: w.getIcon(),
+        temp: w.temp
+    }
     return {
         type: START_ACTIVITY,
         initialLatitude,
