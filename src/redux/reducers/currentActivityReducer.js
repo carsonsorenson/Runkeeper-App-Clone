@@ -1,16 +1,13 @@
-import {SET_ACTIVITY, START_ACTIVITY } from '../actions/currentActivityActions';
+import {SET_ACTIVITY, START_ACTIVITY, UPDATE_POSITION } from '../actions/currentActivityActions';
 
 let initialState = {
-    initialLatitude: null,
-    initialLongitude: null,
+    position : [],
     activity: null,
     initialWeather: null,
     duration: 0,
     distance: 0,
     pace: 0,
     time: 0,
-    finalLatitude: null,
-    finalLongitude: null,
     finalWeather: null,
     feeling: null,
     paused: false
@@ -21,8 +18,7 @@ export default function(state = initialState, action) {
         case START_ACTIVITY:
             return {
                 ...initialState,
-                initialLatitude: action.initialLatitude,
-                initialLongitude: action.initialLongitude,
+                position: [action.position],
                 activity: action.activity,
                 initialWeather: action.weather
             }
@@ -30,6 +26,11 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 ...action.payload
+            }
+        case UPDATE_POSITION:
+            return {
+                ...state,
+                position: [action.position, ...state.position]
             }
         default:
             return state;

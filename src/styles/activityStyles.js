@@ -80,7 +80,12 @@ export default mainStyles = StyleSheet.create({
         backgroundColor: '#f64c72',
         justifyContent: 'center',
         padding: 10,
-        position: 'absolute',
-        bottom: 0
-    }
+    },
+    mapContainer: {
+        width: '100%',
+        height: 400,
+    },
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    },
 });

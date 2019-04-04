@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { initializeActivity, updateDistance, updatePace, pause, updateTime } from '../redux/actions/currentActivityActions';
+import { initializeActivity, updateDistance, updatePace, pause, updateTime, updatePosition } from '../redux/actions/currentActivityActions';
 import CurrentActivityLayout from '../components/CurrentActivityLayout';
 import navigationService from '../services/NavigationService';
 
@@ -78,6 +78,7 @@ class OngoingActivityScreen extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.latitude !== prevProps.latitude || this.props.longitude !== prevProps.longitude) {
+            this.props.dispatchUpdatePosition(this.props.latitude, this.props.longitude);
             this.calculateDistance(prevProps.latitude, prevProps.longitude);
         }
         if (this.props.currentActivity.time !== prevProps.currentActivity.time) {
@@ -115,6 +116,7 @@ function mapDispatchToProps(dispatch) {
         dispatchPause: (isPaused) => dispatch(pause(isPaused)),
         dispatchUpdatePace: (pace) => dispatch(updatePace(pace)),
         dispatchUpdateTime: (time) => dispatch(updateTime(time)),
+        dispatchUpdatePosition: (lat, lon) => dispatch(updatePosition(lat, lon))
     }
 }
 

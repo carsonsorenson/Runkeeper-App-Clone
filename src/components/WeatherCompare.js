@@ -9,7 +9,6 @@ export default class WeatherCompare extends Component {
     }
 
     render() {
-        console.log(this.props.finalWeather);
         if (this.props.finalWeather !== null) {
             return (
                 <View style={styles.weatherContainer}>

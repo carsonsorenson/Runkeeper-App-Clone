@@ -1,9 +1,11 @@
 const SET_ACTIVITY = "SET_ACTIVITY";
 const START_ACTIVITY = "START_ACTIVITY";
+const UPDATE_POSITION = "UPDATE_POSITION";
 
 export {
     SET_ACTIVITY,
     START_ACTIVITY,
+    UPDATE_POSITION
 }
 
 export function finalWeather(weather) {
@@ -38,13 +40,14 @@ export function updateTime(time) {
     }
 }
 
-export function finalPosition(finalLatitude, finalLongitude) {
+export function updatePosition(latitude, longitude) {
+    let position = {
+        latitude,
+        longitude
+    }
     return {
-        type: SET_ACTIVITY,
-        payload: {
-            finalLatitude,
-            finalLongitude
-        }
+        type: UPDATE_POSITION,
+        position
     }
 }
 
@@ -54,10 +57,13 @@ export function initializeActivity(initialLatitude, initialLongitude, activity, 
         icon: w.getIcon(),
         temp: w.temp
     }
+    let position = {
+        latitude: initialLatitude,
+        longitude: initialLongitude
+    }
     return {
         type: START_ACTIVITY,
-        initialLatitude,
-        initialLongitude,
+        position,
         activity,
         weather
     }
