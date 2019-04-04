@@ -8,7 +8,7 @@ export default mainStyles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
     },
     weather: {
-        backgroundColor:'rgba(56, 172, 236, 1)',
+        backgroundColor:'#3BB9FF',
     },
     weatherText: {
         color: 'white'

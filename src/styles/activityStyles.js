@@ -36,7 +36,6 @@ export default mainStyles = StyleSheet.create({
         flexDirection: 'row',
         borderBottomColor: 'black',
         borderBottomWidth: 1,
-
     },
     summary: {
         flex: 1,
@@ -47,5 +46,18 @@ export default mainStyles = StyleSheet.create({
         fontSize: 35,
         fontWeight: '100',
         alignSelf: 'center'
+    },
+    feelingPageContainer: {
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+    },
+    feelingContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+    },
+    feelingText: {
+        alignSelf: 'center',
+        padding: 15
     }
 });
