@@ -1,25 +1,37 @@
-const GET_ACTIVITY = "GET_ACTIVITY";
 const SET_ACTIVITY = "SET_ACTIVITY";
 const START_ACTIVITY = "START_ACTIVITY";
 
 export {
-    GET_ACTIVITY,
     SET_ACTIVITY,
     START_ACTIVITY,
 }
 
-export function getActivity() {
+export function updateTime(time) {
     return {
-        type: GET_ACTIVITY
+        type: SET_ACTIVITY,
+        payload: {
+            time
+        }
     }
 }
 
-export function initializeActivity(initialLatitude, initialLongitude, activity) {
+export function finalPosition(finalLatitude, finalLongitude) {
+    return {
+        type: SET_ACTIVITY,
+        payload: {
+            finalLatitude,
+            finalLongitude
+        }
+    }
+}
+
+export function initializeActivity(initialLatitude, initialLongitude, activity, weather) {
     return {
         type: START_ACTIVITY,
         initialLatitude,
         initialLongitude,
-        activity
+        activity,
+        weather
     }
 }
 

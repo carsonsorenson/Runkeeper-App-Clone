@@ -8,6 +8,7 @@ import {
 
 import HomeScreen from '../screens/HomeScreen';
 import OngoingActivityScreen from '../screens/OngoingActivityScreen';
+import EndActivityScreen from '../screens/EndActivityScreen';
 
 let NavigationService = class NavigationService {
     getTopNavigator() {
@@ -36,7 +37,8 @@ export default navigationService;
 const Root = createStackNavigator(
     {
         Home: HomeScreen,
-        OngoingActivityScreen: OngoingActivityScreen
+        OngoingActivityScreen: OngoingActivityScreen,
+        EndActivityScreen: EndActivityScreen
     },
     {
         initialRouteName: 'Home'

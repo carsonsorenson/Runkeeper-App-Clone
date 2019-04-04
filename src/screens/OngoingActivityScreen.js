@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { initializeActivity, updateDistance, updatePace, pause } from '../redux/actions/currentActivityActions';
+import { initializeActivity, updateDistance, updatePace, pause, updateTime } from '../redux/actions/currentActivityActions';
 import CurrentActivityLayout from '../components/CurrentActivityLayout';
+import navigationService from '../services/NavigationService';
 
 class OngoingActivityScreen extends Component {
     static navigationOptions = {
@@ -12,7 +13,6 @@ class OngoingActivityScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            time: 0,
             timer: null
         }
     }
@@ -21,7 +21,8 @@ class OngoingActivityScreen extends Component {
         this.props.dispatchInitializeActivity(
             this.props.latitude,
             this.props.longitude,
-            this.props.navigation.getParam("activity")
+            this.props.navigation.getParam("activity"),
+            this.props.navigation.getParam("weather")
         )
         this.play();
     }
@@ -32,13 +33,14 @@ class OngoingActivityScreen extends Component {
         this.props.dispatchPause(false);
     }
 
+    stop() {
+        this.pause();
+        navigationService.navigate('EndActivityScreen');
+    }
+
     play() {
         let timer = setInterval(() => {
-            this.setState((prevState) => {
-                return {
-                    time: prevState.time + 1
-                }
-            });
+            this.props.dispatchUpdateTime(this.props.currentActivity.time + 1);
         }, 1000);
         this.setState({timer});
         this.props.dispatchPause(true);
@@ -86,19 +88,15 @@ class OngoingActivityScreen extends Component {
     render() {
         return (
             <CurrentActivityLayout
-                time={this.state.time}
+                time={this.props.currentActivity.time}
                 distance={this.props.currentActivity.distance}
                 pace={this.props.currentActivity.pace}
                 paused={this.props.currentActivity.paused}
                 play={() => this.play()}
                 pause={() => this.pause()}
+                stop={() => this.stop()}
             />
         )
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.state.timer);
-        this.setState({timer:null});
     }
 }
 
@@ -112,10 +110,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        dispatchInitializeActivity: (lat, lon, activity) => dispatch(initializeActivity(lat, lon, activity)),
+        dispatchInitializeActivity: (lat, lon, activity, weather) => dispatch(initializeActivity(lat, lon, activity, weather)),
         dispatchUpdateDistance: (dis) => dispatch(updateDistance(dis)),
         dispatchPause: (isPaused) => dispatch(pause(isPaused)),
-        dispatchUpdatePace: (pace) => dispatch(updatePace(pace))
+        dispatchUpdatePace: (pace) => dispatch(updatePace(pace)),
+        dispatchUpdateTime: (time) => dispatch(updateTime(time)),
     }
 }
 

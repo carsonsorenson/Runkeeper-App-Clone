@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { Text, H3, Button } from 'native-base';
 import styles from '../styles/activityStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {formatValue, formatDistance} from './Calculations';
 
 export default class Measurements extends Component {
     constructor(props) {
@@ -40,37 +41,12 @@ export default class Measurements extends Component {
         }
     }
 
-    formatValue(time) {
-        var hours = Math.floor(time / 3600);
-        var minutes = Math.floor((time - (hours * 3600)) / 60);
-        var seconds = time - (hours * 3600) - (minutes * 60);
-        if (hours < 10) {
-            hours = "0" + hours;
-        }
-        if (minutes < 10) {
-            minutes = "0" + minutes;
-        }
-        if (seconds < 10) {
-            seconds = "0" + seconds;
-        }
-        if (hours >= 1) {
-            return hours + ':' + minutes + ':' + seconds;
-        }
-        else {
-            return minutes + ':' + seconds;
-        }
-    }
-
-    formatDistance(distance) {
-        return distance.toFixed(2);
-    }
-
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.row}>
                     <Text style={styles.bigText}>
-                        {this.formatValue(this.props.time)}
+                        {formatValue(this.props.time)}
                     </Text>
                     <H3 style={{alignSelf: 'center'}}>
                     Time
@@ -78,7 +54,7 @@ export default class Measurements extends Component {
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.bigText}>
-                        {this.formatDistance(this.props.distance)}
+                        {formatDistance(this.props.distance)}
                     </Text>
                     <H3 style={{alignSelf: 'center'}}>
                         Miles
@@ -86,7 +62,7 @@ export default class Measurements extends Component {
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.bigText}>
-                        {this.formatValue(this.props.pace)}
+                        {formatValue(this.props.pace)}
                     </Text>
                     <H3 style={{alignSelf: 'center'}}>
                         Pace Per Mile
@@ -94,7 +70,10 @@ export default class Measurements extends Component {
                 </View>
                 <View style={[styles.row, styles.buttonContainer]}>
                     {this.renderButtons()}
-                    <Button style={[styles.rounded, {backgroundColor: 'red'}]}>
+                    <Button
+                        style={[styles.rounded, {backgroundColor: 'red'}]}
+                        onPress={() => this.props.stop()}
+                    >
                         <Icon
                             name="stop"
                             size={40}

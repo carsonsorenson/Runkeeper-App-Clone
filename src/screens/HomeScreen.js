@@ -86,7 +86,11 @@ class HomeScreen extends Component {
     }
 
     startActivity() {
-        navigationService.navigate('OngoingActivityScreen', {activity: this.state.activity});
+        navigationService.navigate('OngoingActivityScreen',
+            {
+                activity: this.state.activity,
+                weather: this.state.weather
+            });
     }
 
     render() {
@@ -117,13 +121,13 @@ class HomeScreen extends Component {
 function mapStateToProps(state) {
     return {
         latitude: state.locationReducer.latitude,
-        longitude: state.locationReducer.longitude
+        longitude: state.locationReducer.longitude,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        dispatchSetCoords: (lat, lon) => dispatch(setCoords(lat, lon)),
+        dispatchSetCoords: (lat, lon) => dispatch(setCoords(lat, lon))
     }
 }
 

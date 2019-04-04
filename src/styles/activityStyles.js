@@ -30,5 +30,10 @@ export default mainStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'center'
+    },
+    summaryContainer: {
+        height: 100,
+        backgroundColor: 'green',
+        flexDirection: 'row'
     }
 });
