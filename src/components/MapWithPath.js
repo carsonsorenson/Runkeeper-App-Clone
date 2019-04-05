@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Spinner } from 'native-base';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Polyline } from 'react-native-maps';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import styles from '../styles/activityStyles';
@@ -28,6 +28,7 @@ class MapWithPath extends Component {
     }
 
     render() {
+        console.log('here')
         if (this.state.latitude !== null && this.state.longitude !== null) {
             return (
                 <View style={styles.mapContainer}>
@@ -35,17 +36,13 @@ class MapWithPath extends Component {
                         provider={PROVIDER_GOOGLE}
                         style={styles.map}
                         initialRegion={this.state}
-                        onRegionChange={(region) => this.onRegionChange(region)}
+                        //onRegionChange={(region) => this.onRegionChange(region)}                   
                     >
-                        {this.props.position.map((pos, index) =>
-                            <Marker
-                                coordinate={{
-                                    latitude: pos.latitude,
-                                    longitude: pos.longitude
-                                }}
-                                key={index}
-                            />
-                        )}
+                        <Polyline
+                            coordinates={this.props.position}
+                            strokeColor="#000"
+                            strokeWidth={5}
+                        />
                     </MapView>
                 </View>
             )

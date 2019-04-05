@@ -54,7 +54,7 @@ class HomeScreen extends Component {
                 enableHighAccuracy: true,
                 timeout: 20000,
                 maximumAge: 1000,
-                distanceFilter: 5
+                distanceFilter: 15
             }
         )
     }
