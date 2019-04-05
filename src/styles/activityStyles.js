@@ -55,6 +55,7 @@ export default mainStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
+        padding: 10
     },
     feelingText: {
         alignSelf: 'center',
@@ -75,11 +76,18 @@ export default mainStyles = StyleSheet.create({
     weatherText: {
         color: 'white'
     },
+    cameraContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        padding: 10,
+        borderBottomWidth: 1,
+    },
     button: {
         width: '100%',
+        height: '100%',
         backgroundColor: '#f64c72',
         justifyContent: 'center',
-        padding: 10,
     },
     mapContainer: {
         width: '100%',
@@ -87,5 +95,5 @@ export default mainStyles = StyleSheet.create({
     },
     map: {
         ...StyleSheet.absoluteFillObject,
-    },
+    }
 });

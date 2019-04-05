@@ -9,6 +9,8 @@ import MapWithPath from '../components/MapWithPath';
 import WeatherCompare from '../components/WeatherCompare';
 import weatherService from '../services/weather.service';
 import styles from '../styles/activityStyles';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import navigationService from '../services/NavigationService';
 
 class EndActivityScreen extends Component {
     static navigationOptions = {
@@ -31,24 +33,41 @@ class EndActivityScreen extends Component {
 
     render() {
         return (
-            <ScrollView>
-                <SummaryBar
-                    distance={this.props.currentActivity.distance}
-                    time={this.props.currentActivity.time}
-                    pace={this.props.currentActivity.pace}
-                />
-                <Feeling />
-                <WeatherCompare
-                    initialWeather={this.props.currentActivity.initialWeather}
-                    finalWeather={this.props.currentActivity.finalWeather}
-                />
-                <MapWithPath />
-                <Button style={styles.button}>
-                    <H3 style={{color: 'white'}}>
-                        Save Activity
-                    </H3>
-                </Button>
-            </ScrollView>
+            <View style={{flex: 1}}>
+                <View style={{flex: 10}}>
+                    <ScrollView>
+                        <SummaryBar
+                            distance={this.props.currentActivity.distance}
+                            time={this.props.currentActivity.time}
+                            pace={this.props.currentActivity.pace}
+                        />
+                        <Feeling />
+                        <WeatherCompare
+                            initialWeather={this.props.currentActivity.initialWeather}
+                            finalWeather={this.props.currentActivity.finalWeather}
+                        />
+                        <View style={styles.cameraContainer}>
+                            <H3>
+                                Add Photo?
+                            </H3>
+                            <Icon
+                                name="camera"
+                                size={60}
+                                color="#3BB9FF"
+                                onPress={() => navigationService.navigate('CameraScreen')}
+                            />
+                        </View>
+                        <MapWithPath />
+                    </ScrollView>
+                </View>
+                <View style={{flex: 1}}>
+                    <Button style={styles.button}>
+                        <H3 style={{color: 'white'}}>
+                            Save Activity
+                        </H3>
+                    </Button>
+                </View>
+            </View>
         )
     }
 }

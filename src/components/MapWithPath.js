@@ -28,7 +28,6 @@ class MapWithPath extends Component {
     }
 
     render() {
-        console.log(this.props);
         if (this.state.latitude !== null && this.state.longitude !== null) {
             return (
                 <View style={styles.mapContainer}>
@@ -44,7 +43,6 @@ class MapWithPath extends Component {
                                     latitude: pos.latitude,
                                     longitude: pos.longitude
                                 }}
-                                pinColor={"black"}
                                 key={index}
                             />
                         )}

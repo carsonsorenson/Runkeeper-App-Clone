@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { H3 } from 'native-base';
 import { View } from 'react-native';
 import { setFeeling } from '../redux/actions/currentActivityActions';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon from 'react-native-vector-icons/Entypo'
 import styles from '../styles/activityStyles';
 
 
@@ -26,11 +26,9 @@ class Feeling extends Component {
 
     getIcon() {
         let list = [
-            'emoticon-dead',
-            'emoticon-sad',
-            'emoticon-neutral',
-            'emoticon-happy',
-            'emoticon'
+            'emoji-sad',
+            'emoji-neutral',
+            'emoji-happy',
         ]
         return (
             <View style={styles.feelingContainer}>
