@@ -3,6 +3,8 @@ import { View, CameraRoll, PermissionsAndroid, Platform, TouchableOpacity } from
 import { H3, Spinner, Text } from 'native-base';
 import { RNCamera } from 'react-native-camera';
 import styles from '../styles/activityStyles';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon2 from 'react-native-vector-icons/Ionicons';
 
 export default class CameraScreen extends Component {
     static navigationOptions = {
@@ -11,6 +13,9 @@ export default class CameraScreen extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            direction: RNCamera.Constants.Type.back
+        }
     }
 
     componentDidMount() {
@@ -19,19 +24,39 @@ export default class CameraScreen extends Component {
         }
     }
 
+    switchDirections() {
+        if (this.state.direction === RNCamera.Constants.Type.back) {
+            this.setState({direction: RNCamera.Constants.Type.front});
+        }
+        else {
+            this.setState({direction: RNCamera.Constants.Type.back});
+        }
+    }
+
     render() {
         return (
-            <RNCamera
-                ref={ref => {this.camera = ref;}}
-                style={styles.preview}
-                type={RNCamera.Constants.Type.back}
-            >
-                <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
-                    <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-                        <Text style={{ fontSize: 14 }}> SNAP </Text>
-                    </TouchableOpacity>
+            <View style={{flex: 1}}>
+                <RNCamera
+                    ref={ref => {this.camera = ref;}}
+                    style={{flex: 5}}
+                    type={this.state.direction}
+                >
+                </RNCamera>
+                <View style={styles.cameraBar}>
+                    <Icon
+                        name="circle"
+                        color="white"
+                        size={60}
+                        onPress={this.takePicture.bind(this)}
+                    />
+                    <Icon2
+                        name="md-reverse-camera"
+                        color="white"
+                        size={60}
+                        onPress={() => this.switchDirections()}
+                    />
                 </View>
-            </RNCamera>
+            </View>
         )
     }
 

@@ -112,7 +112,12 @@ class HomeScreen extends Component {
         }
         else {
             return (
-                <Spinner />
+                <View>
+                    <Text>
+                        Finding Location...
+                    </Text>
+                    <Spinner />
+                </View>
             )
         }
     }

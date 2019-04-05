@@ -43,7 +43,7 @@ export default mainStyles = StyleSheet.create({
         alignItems: 'center',
     },
     summaryText: {
-        fontSize: 35,
+        fontSize: 32,
         fontWeight: '100',
         alignSelf: 'center'
     },
@@ -82,6 +82,13 @@ export default mainStyles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
         borderBottomWidth: 1,
+    },
+    cameraBar: {
+        flex: 1,
+        backgroundColor: 'black',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     button: {
         width: '100%',

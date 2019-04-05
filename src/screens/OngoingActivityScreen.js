@@ -76,13 +76,15 @@ class OngoingActivityScreen extends Component {
         return v * Math.PI / 180;
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.latitude !== prevProps.latitude || this.props.longitude !== prevProps.longitude) {
-            this.props.dispatchUpdatePosition(this.props.latitude, this.props.longitude);
-            this.calculateDistance(prevProps.latitude, prevProps.longitude);
-        }
-        if (this.props.currentActivity.time !== prevProps.currentActivity.time) {
-            this.calculatePace();
+    componentDidUpdate(prevProps) {
+        if (!this.props.currentActivity.paused) {
+            if (this.props.latitude !== prevProps.latitude || this.props.longitude !== prevProps.longitude) {
+                this.props.dispatchUpdatePosition(this.props.latitude, this.props.longitude);
+                this.calculateDistance(prevProps.latitude, prevProps.longitude);
+            }
+            if (this.props.currentActivity.time !== prevProps.currentActivity.time) {
+                this.calculatePace();
+            }
         }
     }
 
