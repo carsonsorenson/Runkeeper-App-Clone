@@ -24,7 +24,12 @@ class MapWithPath extends Component {
     }
 
     onRegionChange(region) {
-        this.setState({ region });
+        this.setState({ 
+            latitude: region.latitude,
+            longitude: region.longitude,
+            latitudeDelta: region.latitudeDelta,
+            longitudeDelta: region.longitudeDelta
+         });
     }
 
     render() {

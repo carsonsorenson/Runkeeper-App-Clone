@@ -3,8 +3,10 @@ import { View, ScrollView } from 'react-native';
 import { Button, H3 } from 'native-base';
 import { connect } from 'react-redux';
 import { finalWeather } from '../redux/actions/currentActivityActions';
+import { addActivity } from '../redux/actions/activitiesActions';
 import weatherService from '../services/weather.service';
 import styles from '../styles/activityStyles';
+import navigationService from '../services/NavigationService';
 
 import SummaryBar from '../components/SummaryBar';
 import Feeling from '../components/Feeling';
@@ -31,6 +33,11 @@ class EndActivityScreen extends Component {
         })
     }
 
+    saveActivity() {
+        this.props.dispatchAddActivity(this.props.currentActivity);
+        navigationService.navigate('TestScreen');
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -44,7 +51,10 @@ class EndActivityScreen extends Component {
                     </ScrollView>
                 </View>
                 <View style={{flex: 1}}>
-                    <Button style={styles.button}>
+                    <Button
+                        style={styles.button}
+                        onPress={() => this.saveActivity()}
+                    >
                         <H3 style={{color: 'white'}}>
                             Save Activity
                         </H3>
@@ -65,7 +75,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        dispatchFinalWeather: (weather) => dispatch(finalWeather(weather))
+        dispatchFinalWeather: (weather) => dispatch(finalWeather(weather)),
+        dispatchAddActivity: (activity) => dispatch(addActivity(activity))
     }
 }
 

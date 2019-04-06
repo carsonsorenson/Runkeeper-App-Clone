@@ -10,6 +10,7 @@ import HomeScreen from '../screens/HomeScreen';
 import OngoingActivityScreen from '../screens/OngoingActivityScreen';
 import EndActivityScreen from '../screens/EndActivityScreen';
 import CameraScreen from '../screens/CameraScreen';
+import TestScreen from '../screens/TestScreen';
 
 let NavigationService = class NavigationService {
     getTopNavigator() {
@@ -40,7 +41,8 @@ const Root = createStackNavigator(
         Home: HomeScreen,
         OngoingActivityScreen: OngoingActivityScreen,
         EndActivityScreen: EndActivityScreen,
-        CameraScreen: CameraScreen
+        CameraScreen: CameraScreen,
+        TestScreen: TestScreen
     },
     {
         initialRouteName: 'Home'

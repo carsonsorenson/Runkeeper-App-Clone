@@ -11,8 +11,6 @@ class SummaryBar extends Component {
     }
 
     render() {
-        console.log('here!!!!');
-        console.log(this.props);
         return (
             <View style={styles.summaryContainer}>
                 <View style={styles.summary}>
@@ -45,7 +43,6 @@ class SummaryBar extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state);
     return {
         distance: state.currentActivityReducer.distance,
         time: state.currentActivityReducer.time,

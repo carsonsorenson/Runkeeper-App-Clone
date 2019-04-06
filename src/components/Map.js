@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 class Map extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             latitude: null,
             longitude: null,
@@ -24,11 +23,16 @@ class Map extends Component {
     }
 
     onRegionChange(region) {
-        this.setState({ region });
+        this.setState({ 
+            latitude: region.latitude,
+            longitude: region.longitude,
+            latitudeDelta: region.latitudeDelta,
+            longitudeDelta: region.longitudeDelta
+         });
     }
 
     render() {
-        if (this.state.latitude !== null && this.state.longitude !== null) {
+        if (this.state.latitude !== null) {
             return (
                 <MapView
                     provider={PROVIDER_GOOGLE}
@@ -47,7 +51,9 @@ class Map extends Component {
             )
         }
         else {
-            return <Spinner />
+            return (
+                <Spinner />
+            )
         }
     }
 }

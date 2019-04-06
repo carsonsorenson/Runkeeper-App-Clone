@@ -1,14 +1,15 @@
-let initialState = []
+import { ADD_ACTIVITY } from '../actions/activitiesActions';
+
+let initialState = {
+    activites: []
+}
 
 export default function(state = initialState, action) {
     switch (action.type) {
-        case GET_ACTIVITIES:
-            return {
-                ...state
-            }
         case ADD_ACTIVITY:
             return {
-                state: [...state, action.newActivity]
+                ...state,
+                activites: [...state.activites, action.newActivity]
             }
         default:
             return state;

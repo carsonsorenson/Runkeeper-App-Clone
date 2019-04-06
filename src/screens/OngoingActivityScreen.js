@@ -18,6 +18,12 @@ class OngoingActivityScreen extends Component {
     }
 
     componentDidMount() {
+        this.willBlurListener = this.props.navigation.addListener(
+            'willBlur',
+            data => {
+                this.pause();
+            }
+        )
         this.props.dispatchInitializeActivity(
             this.props.latitude,
             this.props.longitude,
@@ -28,6 +34,7 @@ class OngoingActivityScreen extends Component {
     }
 
     pause() {
+        console.log('cleaning up');
         clearInterval(this.state.timer);
         this.setState({timer:null});
         this.props.dispatchPause(false);
@@ -39,6 +46,7 @@ class OngoingActivityScreen extends Component {
     }
 
     play() {
+        console.log('here in play!');
         let timer = setInterval(() => {
             this.props.dispatchUpdateTime(this.props.currentActivity.time + 1);
         }, 1000);
