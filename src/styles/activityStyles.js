@@ -102,5 +102,9 @@ export default mainStyles = StyleSheet.create({
     },
     map: {
         ...StyleSheet.absoluteFillObject,
+    },
+    preview: {
+        height: '100%',
+        width: '100%',
     }
 });

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { View, Image } from 'react-native';
 import { Text, Spinner, H3 } from 'native-base';
 import styles from '../styles/activityStyles';
+import { connect } from 'react-redux';
 
-export default class WeatherCompare extends Component {
+class WeatherCompare extends Component {
     constructor(props) {
         super(props)
     }
@@ -40,3 +41,12 @@ export default class WeatherCompare extends Component {
         }
     }
 }
+
+function mapStateToProps(state) {
+    return {
+        initialWeather: state.currentActivityReducer.initialWeather,
+        finalWeather: state.currentActivityReducer.finalWeather
+    }
+}
+
+export default connect(mapStateToProps)(WeatherCompare);

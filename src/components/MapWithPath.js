@@ -28,7 +28,6 @@ class MapWithPath extends Component {
     }
 
     render() {
-        console.log('here')
         if (this.state.latitude !== null && this.state.longitude !== null) {
             return (
                 <View style={styles.mapContainer}>

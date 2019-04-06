@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
-import { View, CameraRoll, PermissionsAndroid, Platform, TouchableOpacity } from 'react-native';
-import { H3, Spinner, Text } from 'native-base';
+import { View, CameraRoll, PermissionsAndroid, Platform, Image } from 'react-native';
+import { saveImage } from '../redux/actions/currentActivityActions';
+import { connect } from 'react-redux';
 import { RNCamera } from 'react-native-camera';
 import styles from '../styles/activityStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Ionicons';
+import CancelIcon from 'react-native-vector-icons/MaterialIcons';
+import SaveIcon from 'react-native-vector-icons/AntDesign';
+import navigationService from '../services/NavigationService';
 
-export default class CameraScreen extends Component {
+class CameraScreen extends Component {
     static navigationOptions = {
         title: 'Camera',
     }
@@ -14,7 +18,8 @@ export default class CameraScreen extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            direction: RNCamera.Constants.Type.back
+            direction: RNCamera.Constants.Type.back,
+            path: null
         }
     }
 
@@ -33,7 +38,12 @@ export default class CameraScreen extends Component {
         }
     }
 
-    render() {
+    saveImage() {
+        this.props.dispatchSaveImage(this.state.path);
+        navigationService.navigate('EndActivityScreen');
+    }
+
+    renderCamera() {
         return (
             <View style={{flex: 1}}>
                 <RNCamera
@@ -60,18 +70,63 @@ export default class CameraScreen extends Component {
         )
     }
 
+
+    renderImage() {
+        return (
+            <View style={{flex: 1}}>
+                <View style={{flex: 6}}>
+                    <Image
+                        source={{ uri: this.state.path }}
+                        style={styles.preview}
+                    />
+                </View>
+                <View style={styles.cameraBar}>
+                    <CancelIcon
+                        name="cancel"
+                        size={60}
+                        color="white"
+                        onPress={() => this.setState({path: null})}
+                    />
+                    <SaveIcon
+                        name="save"
+                        size={60}
+                        color="white"
+                        onPress={() => this.saveImage()}
+                    />
+                </View>
+            </View>
+        )
+    }
+
+    render() {
+        return (
+            <View style={{flex: 1}}>
+                {this.state.path ? this.renderImage() : this.renderCamera()}
+            </View>
+        )
+    }
+
     takePicture = async function() {
         if (this.camera) {
             try {
                 const options = { quality: 0.5, base64: true };
                 const data = await this.camera.takePictureAsync(options);
-                console.log(data);
+                this.setState({ path: data.uri });
             } catch(error) {
                 console.log(error);
             }
         }
     };
 }
+
+function mapDispatchToProps(dispatch) {
+    return {
+        dispatchSaveImage: (image) => dispatch(saveImage(image))
+    }
+}
+
+
+export default connect(null, mapDispatchToProps)(CameraScreen);
 
 async function requestCameraPermission() {
     try {

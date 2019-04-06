@@ -8,6 +8,15 @@ export {
     UPDATE_POSITION
 }
 
+export function saveImage(image) {
+    return {
+        type: SET_ACTIVITY,
+        payload: {
+            image
+        }
+    }
+}
+
 export function finalWeather(weather) {
     let finalWeather = {
         description: weather.description,
