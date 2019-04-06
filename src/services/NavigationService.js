@@ -3,7 +3,8 @@ import React from 'react';
 import {
     createAppContainer,
     createStackNavigator,
-    NavigationActions
+    NavigationActions,
+    createBottomTabNavigator,
 } from 'react-navigation';
 
 import HomeScreen from '../screens/HomeScreen';
@@ -36,17 +37,35 @@ let NavigationService = class NavigationService {
 const navigationService = new NavigationService();
 export default navigationService;
 
-const Root = createStackNavigator(
+
+const StackNavigator = createStackNavigator(
     {
         Home: HomeScreen,
         OngoingActivityScreen: OngoingActivityScreen,
         EndActivityScreen: EndActivityScreen,
         CameraScreen: CameraScreen,
-        TestScreen: TestScreen
+    },
+)
+
+const TabNavigator = createBottomTabNavigator(
+    {
+        Home: StackNavigator,
+        TestScreen: TestScreen,
     },
     {
         initialRouteName: 'Home'
     }
 )
 
-const TopLevelNavigator = createAppContainer(Root);
+StackNavigator.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true;
+    if (navigation.state.index > 0) {
+        tabBarVisible = false;
+    }
+    return {
+        tabBarVisible
+    }
+}
+
+
+const TopLevelNavigator = createAppContainer(TabNavigator);

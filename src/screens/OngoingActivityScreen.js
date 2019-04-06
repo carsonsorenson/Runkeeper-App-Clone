@@ -1,13 +1,39 @@
 import React, { Component } from 'react';
+import { BackHandler, Alert, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { initializeActivity, updateDistance, updatePace, pause, updateTime, updatePosition } from '../redux/actions/currentActivityActions';
 import CurrentActivityLayout from '../components/CurrentActivityLayout';
+import Icon from 'react-native-vector-icons/FontAwesome'
 import navigationService from '../services/NavigationService';
 
 class OngoingActivityScreen extends Component {
     static navigationOptions = {
-        title: 'Activity',
-        headerLeft: null
+        headerTitle: 'Activity',
+        tabBarVisible: false,
+        headerRight: (
+            <Icon
+                name="trash"
+                size={30}
+                color="black"
+                onPress={() =>
+                    Alert.alert(
+                        "Exit Activity",
+                        "Are you sure you want to quit your activity? It will not be saved",
+                        [
+                            {
+                                text: "cancel"
+                            },
+                            {
+                                text: "Quit",
+                                onPress: () => { navigationService.navigate('Home') }
+                            }
+                        ],
+                        { cancelable: false }
+                    )
+                }
+            />
+          ),
+        headerLeft: null,
     }
 
     constructor(props) {
@@ -17,13 +43,29 @@ class OngoingActivityScreen extends Component {
         }
     }
 
+    deleteAlert() {
+        Alert.alert(
+            "Exit Activity",
+            "Are you sure you want to quit your activity? It will not be saved",
+            [
+                {
+                    text: "cancel"
+                },
+                {
+                    text: "Quit",
+                    onPress: () => { navigationService.navigate('Home'); }
+                }
+            ],
+            { cancelable: false }
+        );
+    }
+
+
     componentDidMount() {
-        this.willBlurListener = this.props.navigation.addListener(
-            'willBlur',
-            data => {
-                this.pause();
-            }
-        )
+        this.backHandler = BackHandler.addEventListener("hardwareBackPress", () => {
+            this.deleteAlert();
+            return true;
+        });
         this.props.dispatchInitializeActivity(
             this.props.latitude,
             this.props.longitude,
@@ -34,19 +76,16 @@ class OngoingActivityScreen extends Component {
     }
 
     pause() {
-        console.log('cleaning up');
         clearInterval(this.state.timer);
         this.setState({timer:null});
         this.props.dispatchPause(false);
     }
 
     stop() {
-        this.pause();
-        navigationService.navigate('EndActivityScreen');
+        this.props.navigation.replace('EndActivityScreen');
     }
 
     play() {
-        console.log('here in play!');
         let timer = setInterval(() => {
             this.props.dispatchUpdateTime(this.props.currentActivity.time + 1);
         }, 1000);
@@ -108,6 +147,12 @@ class OngoingActivityScreen extends Component {
                 stop={() => this.stop()}
             />
         )
+    }
+
+    componentWillUnmount() {
+        this.backHandler.remove();
+        clearInterval(this.state.timer);
+        console.log('here in ongoingActivity component will unmount');
     }
 }
 

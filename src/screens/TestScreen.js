@@ -4,8 +4,7 @@ import { Text } from 'react-native';
 
 class TestScreen extends Component {
     static navigationOptions = {
-        title: 'Delete',
-        headerLeft: null
+        title: 'yo whaddup',
     }
 
     constructor(props) {
@@ -23,9 +22,8 @@ class TestScreen extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state);
     return {
-        activites: state.activitesReducer,
+        activites: state.activitiesReducer.activites
     }
 }
 

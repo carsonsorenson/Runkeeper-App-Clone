@@ -12,6 +12,7 @@ import navigationService from '../services/NavigationService';
 
 class HomeScreen extends Component {
     static navigationOptions = {
+        header: null,
         title: 'Home Screen'
     }
 
@@ -59,20 +60,27 @@ class HomeScreen extends Component {
         )
     }
 
+    updateWeather() {
+        weatherService.getWeather(this.props.latitude, this.props.longitude)
+        .then(results => {
+            this.setState({weather: results});
+        })
+        .catch(error => {
+            console.log(error);
+        })
+    }
+
     componentDidMount() {
+        if (this.props.latitude !== null && this.props.longitude !== null) {
+            this.updateWeather();
+        }
         this.requestLocationPermission();
     }
 
 
-    componentDidUpdate() {
-        if (this.props.latitude !== null && this.props.longitude !== null && this.state.weather === null) {
-            weatherService.getWeather(this.props.latitude, this.props.longitude)
-            .then(results => {
-                this.setState({weather: results});
-            })
-            .catch(error => {
-                console.log(error);
-            })
+    componentDidUpdate(prevProps) {
+        if (this.props.latitude !== prevProps.latitude || this.props.longitude !== prevProps.longitude) {
+            this.updateWeather();
         }
     }
 
