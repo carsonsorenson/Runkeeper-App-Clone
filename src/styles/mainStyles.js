@@ -15,7 +15,7 @@ export default mainStyles = StyleSheet.create({
     },
     button: {
         width: '100%',
-        backgroundColor: 'orange',
+        backgroundColor: '#f64c72',
         justifyContent: 'center'
     }
 });

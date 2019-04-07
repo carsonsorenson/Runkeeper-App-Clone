@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Card, CardItem, Text, H2, Left, Right } from 'native-base';
-import { View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import styles from '../styles/rewardsStyles';
 
 class LevelAward extends Component {
     constructor(props) {
@@ -47,11 +45,17 @@ class LevelAward extends Component {
         return (
             <Card>
                 <CardItem bordered>
-                    <View style={styles.trophyContainer}>
+                    <Left>
+                        <Icon
+                            style={{paddingRight: 20}}
+                            name="trophy"
+                            size={40}
+                            color="gold"
+                        />
                         <H2>
                             You have reached level {this.state.level}!
                         </H2>
-                    </View>
+                    </Left>
                 </CardItem>
                 <CardItem bordered>
                     <Left>
