@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Text, Card, CardItem, Left, Body, H2 } from 'native-base';
+import { Text, Card, CardItem, Left, Body, H2, Button } from 'native-base';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { formatValue } from './Calculations';
+import styles from '../styles/rewardsStyles';
 
 class SpeedAward extends Component {
     constructor(props) {
@@ -59,6 +60,16 @@ class SpeedAward extends Component {
                     </Left>
                 </CardItem>
                 {this.renderLevel()}
+                <CardItem bordered>
+                    <Button
+                        style={styles.button}
+                        onPress={() => this.props.send(this.props.bests.speedId)}
+                    >
+                        <Text>
+                            View Your Speed Award Activity
+                        </Text>
+                    </Button>
+                </CardItem>
                 <CardItem bordered>
                     <Body>
                         <Text>

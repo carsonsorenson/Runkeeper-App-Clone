@@ -153,7 +153,6 @@ class OngoingActivityScreen extends Component {
     componentWillUnmount() {
         this.backHandler.remove();
         clearInterval(this.state.timer);
-        console.log('here in ongoingActivity component will unmount');
     }
 }
 

@@ -6,6 +6,7 @@ import Weather from '../components/Weather';
 import Activity from '../components/Activity';
 import { connect } from 'react-redux';
 import { setCoords } from '../redux/actions/locationActions';
+import { updateBests } from '../redux/actions/rewardsActions';
 import weatherService from '../services/weather.service';
 import styles from '../styles/mainStyles';
 import navigationService from '../services/NavigationService';
@@ -82,6 +83,9 @@ class HomeScreen extends Component {
         if (this.props.latitude !== prevProps.latitude || this.props.longitude !== prevProps.longitude) {
             this.updateWeather();
         }
+        if (this.props.activities !== prevProps.activites) {
+            this.props.dispatchUpdateBests(this.props.activites);
+        }
     }
 
     setActivity(activity) {
@@ -135,11 +139,13 @@ function mapStateToProps(state) {
     return {
         latitude: state.locationReducer.latitude,
         longitude: state.locationReducer.longitude,
+        activites: state.activitiesReducer.activites,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
+        dispatchUpdateBests: (activities) => dispatch(updateBests(activities)),
         dispatchSetCoords: (lat, lon) => dispatch(setCoords(lat, lon))
     }
 }

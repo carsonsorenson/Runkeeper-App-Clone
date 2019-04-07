@@ -42,7 +42,7 @@ class PersonalBests extends Component {
                     <CardItem bordered>
                         <Button
                             style={styles.button}
-                            onPress={() => console.log(bests.time.id)}
+                            onPress={() => this.props.send(bests.time.id)}
                         >
                             <Text>
                                 View Your Longest Activity
@@ -85,7 +85,7 @@ class PersonalBests extends Component {
                     <CardItem bordered>
                         <Button
                             style={styles.button}
-                            onPress={() => console.log(bests.distance.id)}
+                            onPress={() => this.props.send(bests.distance.id)}
                         >
                             <Text>
                                 View Your Longest Distance Activity
@@ -128,7 +128,7 @@ class PersonalBests extends Component {
                     <CardItem bordered>
                         <Button
                             style={styles.button}
-                            onPress={() => console.log(bests.pace.id)}
+                            onPress={() => this.props.send(bests.pace.id)}
                         >
                             <Text>
                                 View Your Activity With the best pace
