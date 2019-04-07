@@ -9,7 +9,7 @@ let initialState = {
     time: 0,
     id: null,
     finalWeather: null,
-    feeling: null,
+    feeling: 1,
     image: null,
     paused: false
 };

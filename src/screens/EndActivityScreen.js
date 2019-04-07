@@ -98,8 +98,14 @@ class EndActivityScreen extends Component {
                 <View style={{flex: 1}}>
                     <View style={{flex: 10}}>
                         <ScrollView>
-                            <SummaryBar />
-                            <Feeling />
+                            <SummaryBar
+                                distance={this.props.currentActivity.distance}
+                                time={this.props.currentActivity.time}
+                                pace={this.props.currentActivity.pace}
+                            />
+                            <Feeling
+                                default={this.props.currentActivity.feeling}
+                            />
                             <WeatherCompare />
                             <CameraContainer />
                             <MapWithPath />

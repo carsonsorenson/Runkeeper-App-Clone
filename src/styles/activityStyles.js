@@ -57,6 +57,12 @@ export default mainStyles = StyleSheet.create({
         alignItems: 'center',
         padding: 10
     },
+    endSummary: {
+        flexDirection: 'row',
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
     feelingText: {
         alignSelf: 'center',
         padding: 15
@@ -106,5 +112,11 @@ export default mainStyles = StyleSheet.create({
     preview: {
         height: '100%',
         width: '100%',
+    },
+    congratsView: {
+        flexDirection: 'row',
+        borderBottomColor: 'black',
+        borderBottomWidth: 1,
+        padding: 10
     }
 });

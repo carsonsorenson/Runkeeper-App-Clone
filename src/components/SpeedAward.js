@@ -27,6 +27,16 @@ class SpeedAward extends Component {
                             Your Best Pace: {formatValue(bests.speedPace).toString()}
                         </H2>
                     </CardItem>
+                    <CardItem bordered>
+                        <Button
+                            style={styles.button}
+                            onPress={() => this.props.send(this.props.bests.speedId)}
+                        >
+                            <Text>
+                                View Your Speed Award Activity
+                            </Text>
+                        </Button>
+                    </CardItem>
                 </View>
             )
         }
@@ -60,16 +70,6 @@ class SpeedAward extends Component {
                     </Left>
                 </CardItem>
                 {this.renderLevel()}
-                <CardItem bordered>
-                    <Button
-                        style={styles.button}
-                        onPress={() => this.props.send(this.props.bests.speedId)}
-                    >
-                        <Text>
-                            View Your Speed Award Activity
-                        </Text>
-                    </Button>
-                </CardItem>
                 <CardItem bordered>
                     <Body>
                         <Text>

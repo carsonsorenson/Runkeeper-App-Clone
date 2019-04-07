@@ -19,6 +19,10 @@ class Feeling extends Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({ pressed: this.props.default});
+    }
+
     pressed(val) {
         this.setState({pressed: val});
         this.props.dispatchSetFeeling(val);

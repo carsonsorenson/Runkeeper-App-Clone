@@ -3,9 +3,8 @@ import {formatValue, formatDistance} from './Calculations';
 import { H3, Text } from 'native-base';
 import { View } from 'react-native';
 import styles from '../styles/activityStyles';
-import { connect } from 'react-redux';
 
-class SummaryBar extends Component {
+export default class SummaryBar extends Component {
     constructor(props) {
         super(props)
     }
@@ -41,13 +40,3 @@ class SummaryBar extends Component {
         )
     }
 }
-
-function mapStateToProps(state) {
-    return {
-        distance: state.currentActivityReducer.distance,
-        time: state.currentActivityReducer.time,
-        pace: state.currentActivityReducer.pace
-    }
-}
-
-export default connect(mapStateToProps)(SummaryBar);
