@@ -42,6 +42,11 @@ export function updateBests(activites) {
                 speedLevel = s;
                 speedPace = a.pace;
             }
+            else if (s == speedLevel) {
+                if (a.pace < speedPace) {
+                    speedPace = a.pace;
+                }
+            }
         }
     }
 
