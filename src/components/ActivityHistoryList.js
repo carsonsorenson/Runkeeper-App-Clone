@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Picker, Text, CardItem } from 'native-base';
+import { Picker, Text, CardItem, Card } from 'native-base';
 import { connect } from 'react-redux';
 import { View, FlatList } from 'react-native';
 import styles from '../styles/listStyles';
-
+import { formatValue, formatDistance } from './Calculations';
 
 class ActivityHistoryList extends Component {
     constructor(props) {
@@ -13,26 +13,96 @@ class ActivityHistoryList extends Component {
             view: "All",
             sorted: "Date",
             range: "All",
-            data: []
+            data: [],
         }
     }
 
+    sortByDuration(a, b) {
+        if (a.time > b.time)
+            return -1;
+        if (a.time < b.time)
+            return 1;
+        return 0
+    }
+    
+    sortByDistance(a, b) {
+        if (a.distance > b.distance)
+            return -1;
+        if (a.distance < b.distance)
+            return 1;
+        return 0
+    }
+
+    sortByPace(a, b) {
+        if (a.pace < b.pace)
+            return -1;
+        if (a.pace > b.pace)
+            return 1;
+        return 0
+    }
+
+    sortByDate(a, b) {
+        if (a.date < b.date) {
+            return - 1;
+        }
+        if (a.date > b.date) {
+            return 1;
+        }
+        return 0;
+    }
+
+
     componentDidMount() {
         this.setState({data: this.props.activites});
+        this.filterData(this.state.view);
+        this.sortData(this.state.sorted);
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.activites !== prevProps.activites) {
             this.setState({data: this.props.activites});
+            this.filterData(this.state.view);
+            this.sortData(this.state.sorted);
+        }
+    }
+
+    filterData(value) {
+        const newData = this.props.activites.filter(item => {
+            if (value === 'All' || item.activity === value) {
+                return item;
+            }
+        })
+        this.setState({ data: newData });
+    }
+
+    sortData(value) {
+        if (value === 'Duration') {
+            const newData = this.state.data.sort(this.sortByDuration);
+            this.setState({ data: newData });
+        }
+        else if (value === 'Distance') {
+            const newData = this.state.data.sort(this.sortByDistance);
+            console.log(newData);
+            this.setState({ data: newData });
+        }
+        else if (value === 'Pace') {
+            const newData = this.state.data.sort(this.sortByPace);
+            this.setState({ data: newData });
+        }
+        else if (value === 'Date') {
+            const newData = this.state.data.sort(this.sortByDate);
+            this.setState({ data: newData });
         }
     }
 
     viewChange(value) {
         this.setState({ view: value });
+        this.filterData(value);
     }
 
     sortedChange(value) {
         this.setState({ sorted: value });
+        this.sortData(value);
     }
 
     rangeChange(value) {
@@ -41,11 +111,28 @@ class ActivityHistoryList extends Component {
 
     renderActivity = ({ item, index }) => {
         return (
-            <CardItem>
-                <Text>
-                    {item.activity}
-                </Text>
-            </CardItem>
+            <Card>
+                <CardItem>
+                    <Text>
+                        {item.activity}
+                    </Text>
+                </CardItem>
+                <CardItem>
+                    <Text>
+                        Distance: {formatDistance(item.distance).toString()}
+                    </Text>
+                </CardItem>
+                <CardItem>
+                    <Text>
+                        Pace: {formatValue(item.pace).toString()}
+                    </Text>
+                </CardItem>
+                <CardItem>
+                    <Text>
+                        Time: {formatValue(item.time).toString()}
+                    </Text>
+                </CardItem>
+            </Card>
         )
     }
 
@@ -88,12 +175,13 @@ class ActivityHistoryList extends Component {
                     >
                         <Picker.Item label="Date" value="Date" />
                         <Picker.Item label="Pace" value="Pace" />
+                        <Picker.Item label="Distance" value="Distance" />
                         <Picker.Item label="Duration" value="Duration" />
                     </Picker>
                 </View>
                 <View style={styles.row}>
                     <Text>
-                        Filter Date:
+                        Filter:
                     </Text>
                     <Picker
                         mode="dropdown"
@@ -111,6 +199,7 @@ class ActivityHistoryList extends Component {
                     keyExtractor={(item, index) => item.id}
                     renderItem={this.renderActivity}
                     ListEmptyComponent={this.renderEmptyList}
+                    extraData={this.state}
                 />
             </View>
         )

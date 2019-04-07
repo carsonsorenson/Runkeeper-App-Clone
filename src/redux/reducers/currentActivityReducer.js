@@ -4,7 +4,6 @@ let initialState = {
     position : [],
     activity: null,
     initialWeather: null,
-    duration: 0,
     distance: 0,
     pace: 0,
     time: 0,
