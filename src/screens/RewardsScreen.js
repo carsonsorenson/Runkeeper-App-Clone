@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
 import LevelAward from '../components/LevelAward';
+import PersonalBests from '../components/PersonalBests';
 
 export default class RewardsScreen extends Component {
     static navigationOptions = {
@@ -15,6 +16,7 @@ export default class RewardsScreen extends Component {
         return (
             <View>
                 <LevelAward />
+                <PersonalBests />
             </View>
         )
     }

@@ -8,6 +8,7 @@ let initialState = {
     distance: 0,
     pace: 0,
     time: 0,
+    id: null,
     finalWeather: null,
     feeling: null,
     image: null,
@@ -21,7 +22,8 @@ export default function(state = initialState, action) {
                 ...initialState,
                 position: [action.position],
                 activity: action.activity,
-                initialWeather: action.weather
+                initialWeather: action.weather,
+                id: action.id
             }
         case SET_ACTIVITY:
             return {

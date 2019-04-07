@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { View, ScrollView, BackHandler, Alert } from 'react-native';
-import { Button, H3 } from 'native-base';
+import { Button, H3, Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import { finalWeather } from '../redux/actions/currentActivityActions';
 import { addActivity } from '../redux/actions/activitiesActions';
+import { updateBests } from '../redux/actions/rewardsActions';
 import weatherService from '../services/weather.service';
 import styles from '../styles/activityStyles';
 import navigationService from '../services/NavigationService';
@@ -47,6 +48,9 @@ class EndActivityScreen extends Component {
 
     constructor(props) {
         super(props)
+        this.state = {
+            loading: false
+        }
     }
 
     componentDidMount() {
@@ -76,35 +80,52 @@ class EndActivityScreen extends Component {
         })
     }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.activites !== prevProps.activites && this.state.loading === true) {
+            navigationService.navigate('Home');
+        }
+    }
+
     saveActivity() {
+        this.props.dispatchUpdateBests(this.props.currentActivity.time, this.props.currentActivity.distance, this.props.currentActivity.pace, this.props.currentActivity.id);
         this.props.dispatchAddActivity(this.props.currentActivity);
-        this.props.navigation.navigate('Home');
+        this.setState({
+            loading: true
+        })
     }
 
     render() {
-        return (
-            <View style={{flex: 1}}>
-                <View style={{flex: 10}}>
-                    <ScrollView>
-                        <SummaryBar />
-                        <Feeling />
-                        <WeatherCompare />
-                        <CameraContainer />
-                        <MapWithPath />
-                    </ScrollView>
-                </View>
+        console.log(this.props);
+        if (this.state.loading === false) {
+            return (
                 <View style={{flex: 1}}>
-                    <Button
-                        style={styles.button}
-                        onPress={() => this.saveActivity()}
-                    >
-                        <H3 style={{color: 'white'}}>
-                            Save Activity
-                        </H3>
-                    </Button>
+                    <View style={{flex: 10}}>
+                        <ScrollView>
+                            <SummaryBar />
+                            <Feeling />
+                            <WeatherCompare />
+                            <CameraContainer />
+                            <MapWithPath />
+                        </ScrollView>
+                    </View>
+                    <View style={{flex: 1}}>
+                        <Button
+                            style={styles.button}
+                            onPress={() => this.saveActivity()}
+                        >
+                            <H3 style={{color: 'white'}}>
+                                Save Activity
+                            </H3>
+                        </Button>
+                    </View>
                 </View>
-            </View>
-        )
+            )
+        }
+        else {
+            return (
+                <Spinner />
+            )
+        }
     }
 
     componentWillUnmount() {
@@ -117,13 +138,15 @@ function mapStateToProps(state) {
         latitude: state.locationReducer.latitude,
         longitude: state.locationReducer.longitude,
         currentActivity: state.currentActivityReducer,
+        activites: state.activitiesReducer
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         dispatchFinalWeather: (weather) => dispatch(finalWeather(weather)),
-        dispatchAddActivity: (activity) => dispatch(addActivity(activity))
+        dispatchAddActivity: (activity) => dispatch(addActivity(activity)),
+        dispatchUpdateBests: (time, dis, pace, id) => dispatch(updateBests(time, dis, pace, id))
     }
 }
 

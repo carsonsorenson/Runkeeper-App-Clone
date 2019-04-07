@@ -1,6 +1,7 @@
 const SET_ACTIVITY = "SET_ACTIVITY";
 const START_ACTIVITY = "START_ACTIVITY";
 const UPDATE_POSITION = "UPDATE_POSITION";
+const uuid = require('uuid/v1');
 
 export {
     SET_ACTIVITY,
@@ -74,7 +75,8 @@ export function initializeActivity(initialLatitude, initialLongitude, activity, 
         type: START_ACTIVITY,
         position,
         activity,
-        weather
+        weather,
+        id: uuid()
     }
 }
 

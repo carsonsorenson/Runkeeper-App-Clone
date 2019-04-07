@@ -1,4 +1,3 @@
-const uuid = require('uuid/v1');
 const ADD_ACTIVITY = "ADD_ACTIVITY";
 
 export {
@@ -10,6 +9,6 @@ export function addActivity(newActivity) {
     return {
         type: ADD_ACTIVITY,
         newActivity,
-        id: uuid()
+        id: newActivity.id
     }
 }
