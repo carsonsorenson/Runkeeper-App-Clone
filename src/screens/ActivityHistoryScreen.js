@@ -1,34 +1,37 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import { Text } from 'react-native';
+import ActivityHistoryList from '../components/ActivityHistoryList';
 
-class ActivityHistoryScreen extends Component {
+export default class ActivityHistoryScreen extends Component {
     static navigationOptions = {
         title: 'Activity History',
     }
 
     constructor(props) {
         super(props)
+
+        this.state = {
+            list: true
+        }
     }
 
-    render() {
-        if (this.props.activites !== null) {
-            for (let i in this.props.activites) {
-                console.log(i);
-            }
-        }
+    renderTimeLine() {
         return (
             <Text>
-                hi
+                Hey
             </Text>
         )
     }
-}
 
-function mapStateToProps(state) {
-    return {
-        activites: state.activitiesReducer
+    renderList() {
+        return (
+            <ActivityHistoryList />
+        )
+    }
+
+    render() {
+        return (
+            this.state.list ? this.renderList() : this.renderTimeLine()
+        )
     }
 }
-
-export default connect(mapStateToProps)(ActivityHistoryScreen);

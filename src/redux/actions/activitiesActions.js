@@ -8,7 +8,6 @@ export function addActivity(newActivity) {
     newActivity.date = new Date();
     return {
         type: ADD_ACTIVITY,
-        newActivity,
-        id: newActivity.id
+        newActivity
     }
 }

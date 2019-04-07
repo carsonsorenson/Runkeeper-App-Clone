@@ -141,7 +141,6 @@ class PersonalBests extends Component {
     }
 
     render() {
-        console.log(this.props.bests);
         return (
             <Card>
                 <CardItem bordered>

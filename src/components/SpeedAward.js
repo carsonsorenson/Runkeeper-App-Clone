@@ -4,7 +4,6 @@ import { View } from 'react-native';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { formatValue } from './Calculations';
-import styles from '../styles/rewardsStyles';
 
 class SpeedAward extends Component {
     constructor(props) {
@@ -28,8 +27,8 @@ class SpeedAward extends Component {
     update() {
         bestPace = Infinity;
         level = 0;
-        for (let activity in this.props.activites) {
-            let a = this.props.activites[activity]
+        for (let i = 0; i < this.props.activites.length; i++) {
+            let a  = this.props.activites[i];
             if (a.distance >= 1 && a.activity === 'Running' && a.pace <= 600) {
                 level = Math.floor((600 - a.pace) / 30) + 1;
                 bestPace = a.pace
@@ -104,7 +103,7 @@ class SpeedAward extends Component {
 
 function mapStateToProps(state) {
     return {
-        activites: state.activitiesReducer
+        activites: state.activitiesReducer.activites
     }
 }
 

@@ -15,11 +15,8 @@ class LevelAward extends Component {
     }
 
     update() {
-        let counter = 0;
+        let counter = this.props.activites.length;
         let level = 0
-        for (let i in this.props.activites) {
-            counter += 1
-        }
         if (counter > 0) {
             level = Math.floor(counter / 5)
         }
@@ -88,7 +85,7 @@ class LevelAward extends Component {
 
 function mapStateToProps(state) {
     return {
-        activites: state.activitiesReducer
+        activites: state.activitiesReducer.activites
     }
 }
 

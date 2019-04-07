@@ -13,6 +13,7 @@ class OngoingActivityScreen extends Component {
         headerRight: (
             <Icon
                 name="trash"
+                style={{margin:30}}
                 size={30}
                 color="black"
                 onPress={() =>

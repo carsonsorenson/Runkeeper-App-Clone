@@ -5,7 +5,6 @@ export {
 }
 
 export function updateBests(newTime, newDistance, newPace, id) {
-    console.log('time', newTime, 'distance', newDistance, 'pace', newPace);
     return {
         type: UPDATE_BESTS,
         newTime,
