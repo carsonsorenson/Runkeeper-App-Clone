@@ -11,7 +11,8 @@ import HomeScreen from '../screens/HomeScreen';
 import OngoingActivityScreen from '../screens/OngoingActivityScreen';
 import EndActivityScreen from '../screens/EndActivityScreen';
 import CameraScreen from '../screens/CameraScreen';
-import TestScreen from '../screens/TestScreen';
+import ActivityHistoryScreen from '../screens/ActivityHistoryScreen';
+import RewardsScreen from '../screens/RewardsScreen';
 
 let NavigationService = class NavigationService {
     getTopNavigator() {
@@ -38,7 +39,7 @@ const navigationService = new NavigationService();
 export default navigationService;
 
 
-const StackNavigator = createStackNavigator(
+const ActivityNav = createStackNavigator(
     {
         Home: HomeScreen,
         OngoingActivityScreen: OngoingActivityScreen,
@@ -49,15 +50,16 @@ const StackNavigator = createStackNavigator(
 
 const TabNavigator = createBottomTabNavigator(
     {
-        Home: StackNavigator,
-        TestScreen: TestScreen,
+        Home: ActivityNav,
+        ActivityHistoryScreen: ActivityHistoryScreen,
+        RewardsScreen: RewardsScreen
     },
     {
         initialRouteName: 'Home'
     }
 )
 
-StackNavigator.navigationOptions = ({ navigation }) => {
+ActivityNav.navigationOptions = ({ navigation }) => {
     let tabBarVisible = true;
     if (navigation.state.index > 0) {
         tabBarVisible = false;

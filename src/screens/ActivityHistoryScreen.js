@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Text } from 'react-native';
 
-class TestScreen extends Component {
+class ActivityHistoryScreen extends Component {
     static navigationOptions = {
-        title: 'yo whaddup',
+        title: 'Activity History',
     }
 
     constructor(props) {
@@ -12,7 +12,11 @@ class TestScreen extends Component {
     }
 
     render() {
-        console.log(this.props);
+        if (this.props.activites !== null) {
+            for (let i in this.props.activites) {
+                console.log(i);
+            }
+        }
         return (
             <Text>
                 hi
@@ -23,8 +27,8 @@ class TestScreen extends Component {
 
 function mapStateToProps(state) {
     return {
-        activites: state.activitiesReducer.activites
+        activites: state.activitiesReducer
     }
 }
 
-export default connect(mapStateToProps)(TestScreen);
+export default connect(mapStateToProps)(ActivityHistoryScreen);

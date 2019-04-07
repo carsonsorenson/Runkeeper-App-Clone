@@ -78,8 +78,7 @@ class EndActivityScreen extends Component {
 
     saveActivity() {
         this.props.dispatchAddActivity(this.props.currentActivity);
-        this.props.navigation.replace('Home');
-        //navigationService.navigate('Home');
+        this.props.navigation.navigate('Home');
     }
 
     render() {
