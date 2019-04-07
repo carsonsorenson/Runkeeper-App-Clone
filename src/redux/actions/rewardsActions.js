@@ -10,6 +10,7 @@ export function updateBests(activites) {
     let numNeeded = 5 - (size % 5);
     speedLevel = 0;
     speedPace = 0;
+    speedId = null;
     let newTime = {
         best: 0,
         id: null
@@ -41,10 +42,12 @@ export function updateBests(activites) {
             if (s > speedLevel) {
                 speedLevel = s;
                 speedPace = a.pace;
+                speedId = a.id;
             }
             else if (s == speedLevel) {
                 if (a.pace < speedPace) {
                     speedPace = a.pace;
+                    speedId = a.id;
                 }
             }
         }
@@ -61,7 +64,8 @@ export function updateBests(activites) {
             level,
             numNeeded,
             speedLevel,
-            speedPace
+            speedPace,
+            speedId
         }
     }
 }

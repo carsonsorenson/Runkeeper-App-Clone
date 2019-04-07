@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Picker, Text, CardItem, Card } from 'native-base';
+import { TouchableOpacity } from 'react-native';
+import { Picker, Text, CardItem, Card, Left, H2, Right } from 'native-base';
 import { connect } from 'react-redux';
 import { View, FlatList } from 'react-native';
 import styles from '../styles/listStyles';
 import { formatValue, formatDistance } from './Calculations';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+
 
 class ActivityHistoryList extends Component {
     constructor(props) {
@@ -69,11 +72,8 @@ class ActivityHistoryList extends Component {
     arrange() {
         let newData = []
         newData = this.sortData(newData, this.state.sorted);
-        console.log('Data after sorting', newData);
         newData = this.filterData(newData, this.state.view);
-        console.log('Data after view', newData);
         newData = this.filterDate(newData, this.state.range);
-        console.log('Data after data', newData);
         this.setState({data: newData});
     }
 
@@ -156,30 +156,58 @@ class ActivityHistoryList extends Component {
         this.setState({ range: value });
     }
 
-    renderActivity = ({ item, index }) => {
+    renderIcon(activity) {
+        let iconName = activity.toLowerCase();
+        if (iconName === 'biking')
+            iconName = 'bicycle';
+        else if (iconName === "skiing") {
+            iconName = "snowflake"
+        }
         return (
-            <Card>
-                <CardItem>
-                    <Text>
-                        {item.activity}
-                    </Text>
-                </CardItem>
-                <CardItem>
-                    <Text>
-                        Distance: {formatDistance(item.distance).toString()}
-                    </Text>
-                </CardItem>
-                <CardItem>
-                    <Text>
-                        Pace: {formatValue(item.pace).toString()}
-                    </Text>
-                </CardItem>
-                <CardItem>
-                    <Text>
-                        Time: {formatValue(item.time).toString()}
-                    </Text>
-                </CardItem>
-            </Card>
+            <Icon
+                name={iconName}
+                size={40}
+                color="#3BB9FF"
+                style={{paddingRight: 20}}
+            />
+        )
+    }
+
+    renderActivity = ({ item, index }) => {
+        const d = `${item.date.getMonth() + 1}/${item.date.getDate()}/${item.date.getFullYear()}`;
+        return (
+            <TouchableOpacity onPress={() => console.log(item.id)}>
+                <Card>
+                    <CardItem>
+                        <Left>
+                            {this.renderIcon(item.activity)}
+                            <H2>
+                                {item.activity}
+                            </H2>
+                        </Left>
+                        <Right>
+                            <H2>
+                                {d.toString()}
+                            </H2>
+                        </Right>
+                    </CardItem>
+                    <CardItem>
+                        <Text>
+                            Distance: {formatDistance(item.distance).toString()}
+                        </Text>
+                    </CardItem>
+                    <CardItem>
+                        <Text>
+                            Pace: {formatValue(item.pace).toString()}
+                        </Text>
+                    </CardItem>
+                    <CardItem>
+                        <Text>
+                            Time: {formatValue(item.time).toString()}
+                        </Text>
+                    </CardItem>
+                </Card>
+            </TouchableOpacity>
         )
     }
 
