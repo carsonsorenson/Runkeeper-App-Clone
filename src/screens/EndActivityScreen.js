@@ -4,7 +4,6 @@ import { Button, H3, Spinner } from 'native-base';
 import { connect } from 'react-redux';
 import { finalWeather } from '../redux/actions/currentActivityActions';
 import { addActivity } from '../redux/actions/activitiesActions';
-import { updateBests } from '../redux/actions/rewardsActions';
 import weatherService from '../services/weather.service';
 import styles from '../styles/activityStyles';
 import navigationService from '../services/NavigationService';
@@ -15,7 +14,6 @@ import Feeling from '../components/Feeling';
 import MapWithPath from '../components/MapWithPath';
 import WeatherCompare from '../components/WeatherCompare';
 import CameraContainer from '../components/CameraContainer';
-import { NavigationActions, StackActions } from 'react-navigation';
 
 class EndActivityScreen extends Component {
     static navigationOptions = {
@@ -88,7 +86,6 @@ class EndActivityScreen extends Component {
     }
 
     saveActivity() {
-        this.props.dispatchUpdateBests(this.props.currentActivity.time, this.props.currentActivity.distance, this.props.currentActivity.pace, this.props.currentActivity.id);
         this.props.dispatchAddActivity(this.props.currentActivity);
         this.setState({
             loading: true
@@ -147,7 +144,6 @@ function mapDispatchToProps(dispatch) {
     return {
         dispatchFinalWeather: (weather) => dispatch(finalWeather(weather)),
         dispatchAddActivity: (activity) => dispatch(addActivity(activity)),
-        dispatchUpdateBests: (time, dis, pace, id) => dispatch(updateBests(time, dis, pace, id))
     }
 }
 

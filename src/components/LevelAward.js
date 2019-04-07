@@ -6,39 +6,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 class LevelAward extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            size: 0,
-            level: 0,
-            numNeeded: "0",
-            nextLevel: "0"
-        }
-    }
-
-    update() {
-        let counter = this.props.activites.length;
-        let level = 0
-        if (counter > 0) {
-            level = Math.floor(counter / 5)
-        }
-        this.setState({
-            size: counter.toString(),
-            level: level.toString(),
-            numNeeded: (5 - (counter % 5)).toString(),
-            nextLevel: (level + 1).toString()
-        });
-    }
-
-    componentDidMount() {
-        this.update();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.activites !== this.props.activites) {
-            this.update();
-        }
     }
 
     render() {
+        const { bests } = this.props;
         return (
             <Card>
                 <CardItem bordered>
@@ -50,7 +21,7 @@ class LevelAward extends Component {
                             color="gold"
                         />
                         <H2>
-                            You have reached level {this.state.level}!
+                            You have reached level {bests.level}!
                         </H2>
                     </Left>
                 </CardItem>
@@ -62,7 +33,7 @@ class LevelAward extends Component {
                     </Left>
                     <Right>
                         <Text>
-                            {this.state.size}
+                            {bests.size}
                         </Text>
                     </Right>
                 </CardItem>
@@ -74,7 +45,7 @@ class LevelAward extends Component {
                     </Left>
                     <Right>
                         <Text>
-                            {this.state.numNeeded}
+                            {bests.numNeeded}
                         </Text>
                     </Right>
                 </CardItem>
@@ -85,7 +56,7 @@ class LevelAward extends Component {
 
 function mapStateToProps(state) {
     return {
-        activites: state.activitiesReducer.activites
+        bests: state.rewardsReducer
     }
 }
 

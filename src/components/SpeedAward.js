@@ -8,52 +8,22 @@ import { formatValue } from './Calculations';
 class SpeedAward extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            level: "0",
-            pace: 0,
-        }
     }
 
-    componentDidMount() {
-        this.update();
-    }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.activites !== this.props.activites) {
-            this.update();
-        }
-    }
-
-    update() {
-        bestPace = Infinity;
-        level = 0;
-        for (let i = 0; i < this.props.activites.length; i++) {
-            let a  = this.props.activites[i];
-            if (a.distance >= 1 && a.activity === 'Running' && a.pace <= 600) {
-                level = Math.floor((600 - a.pace) / 30) + 1;
-                bestPace = a.pace
-            }
-        }
-        if (level !== 0) {
-            this.setState({
-                level: level.toString(),
-                pace: bestPace
-            })
-        }
-    }
 
     renderLevel() {
-        if (this.state.level !== "0") {
+        const { bests } = this.props;
+        if (bests.speedLevel !== 0) {
             return (
                 <View>
                     <CardItem bordered>
                         <H2>
-                            Your Level: {this.state.level}
+                            Your Level: {bests.speedLevel.toString()}
                         </H2>
                     </CardItem>
                     <CardItem bordered>
                         <H2>
-                            Your Best Pace: {formatValue(this.state.pace).toString()}
+                            Your Best Pace: {formatValue(bests.speedPace).toString()}
                         </H2>
                     </CardItem>
                 </View>
@@ -103,7 +73,7 @@ class SpeedAward extends Component {
 
 function mapStateToProps(state) {
     return {
-        activites: state.activitiesReducer.activites
+        bests: state.rewardsReducer
     }
 }
 
