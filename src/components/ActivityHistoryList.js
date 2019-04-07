@@ -6,6 +6,7 @@ import { View, FlatList } from 'react-native';
 import styles from '../styles/listStyles';
 import { formatValue, formatDistance } from './Calculations';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import navigationService from '../services/NavigationService';
 
 
 class ActivityHistoryList extends Component {
@@ -176,7 +177,7 @@ class ActivityHistoryList extends Component {
     renderActivity = ({ item, index }) => {
         const d = `${item.date.getMonth() + 1}/${item.date.getDate()}/${item.date.getFullYear()}`;
         return (
-            <TouchableOpacity onPress={() => console.log(item.id)}>
+            <TouchableOpacity onPress={() => navigationService.navigate('ActivityDetailScreen', {id: item.id})}>
                 <Card>
                     <CardItem>
                         <Left>

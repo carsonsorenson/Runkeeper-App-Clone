@@ -12,7 +12,6 @@ class PersonalBests extends Component {
     }
 
     renderTime() {
-        console.log(this.props);
         const { bests } = this.props;
         if (bests.time.id === null) {
             return (

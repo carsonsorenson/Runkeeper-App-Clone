@@ -13,6 +13,7 @@ import EndActivityScreen from '../screens/EndActivityScreen';
 import CameraScreen from '../screens/CameraScreen';
 import ActivityHistoryScreen from '../screens/ActivityHistoryScreen';
 import RewardsScreen from '../screens/RewardsScreen';
+import ActivityDetailScreen from '../screens/ActivityDetailScreen';
 
 let NavigationService = class NavigationService {
     getTopNavigator() {
@@ -48,10 +49,22 @@ const ActivityNav = createStackNavigator(
     },
 )
 
+const DetailNav = createStackNavigator(
+    {
+        ActivityHistoryScreen: ActivityHistoryScreen,
+        ActivityDetailScreen: ActivityDetailScreen
+    }
+)
+
 const TabNavigator = createBottomTabNavigator(
     {
         Home: ActivityNav,
-        ActivityHistoryScreen: ActivityHistoryScreen,
+        ActivityHistoryScreen: {
+            screen: DetailNav,
+            navigationOptions: {
+                title: 'Activity History'
+            }
+        },
         RewardsScreen: RewardsScreen
     },
     {
@@ -68,6 +81,17 @@ ActivityNav.navigationOptions = ({ navigation }) => {
         tabBarVisible
     }
 }
+
+DetailNav.navigationOptions = ({ navigation }) => {
+    let tabBarVisible = true;
+    if (navigation.state.index > 0) {
+        tabBarVisible = false;
+    }
+    return {
+        tabBarVisible
+    }
+}
+
 
 
 const TopLevelNavigator = createAppContainer(TabNavigator);

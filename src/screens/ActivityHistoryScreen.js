@@ -4,6 +4,7 @@ import ActivityHistoryList from '../components/ActivityHistoryList';
 
 export default class ActivityHistoryScreen extends Component {
     static navigationOptions = {
+        header: null,
         title: 'Activity History',
     }
 

@@ -93,7 +93,6 @@ class EndActivityScreen extends Component {
     }
 
     render() {
-        console.log(this.props);
         if (this.state.loading === false) {
             return (
                 <View style={{flex: 1}}>

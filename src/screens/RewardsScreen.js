@@ -30,7 +30,6 @@ class RewardsScreen extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log(this.props);
         if (this.props.bests !== prevProps.bests) {
             this.setState({
                 loading: false
