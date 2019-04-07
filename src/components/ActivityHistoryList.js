@@ -54,55 +54,102 @@ class ActivityHistoryList extends Component {
 
     componentDidMount() {
         this.setState({data: this.props.activites});
-        this.filterData(this.state.view);
-        this.sortData(this.state.sorted);
+        this.arrange();
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props.activites !== prevProps.activites) {
-            this.setState({data: this.props.activites});
-            this.filterData(this.state.view);
-            this.sortData(this.state.sorted);
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.activites !== this.props.activites) {
+            this.arrange();
+        }
+        else if (this.state.view !== prevState.view || this.state.sorted !== prevState.sorted || this.state.range !== prevState.range) {
+            this.arrange();
         }
     }
 
-    filterData(value) {
-        const newData = this.props.activites.filter(item => {
+    arrange() {
+        let newData = []
+        newData = this.sortData(newData, this.state.sorted);
+        console.log('Data after sorting', newData);
+        newData = this.filterData(newData, this.state.view);
+        console.log('Data after view', newData);
+        newData = this.filterDate(newData, this.state.range);
+        console.log('Data after data', newData);
+        this.setState({data: newData});
+    }
+
+    filterData(newData, value) {
+        const d = newData.filter(item => {
             if (value === 'All' || item.activity === value) {
                 return item;
             }
-        })
-        this.setState({ data: newData });
+        });
+        return d;
     }
 
-    sortData(value) {
-        if (value === 'Duration') {
-            const newData = this.state.data.sort(this.sortByDuration);
-            this.setState({ data: newData });
+    filterDate(newData, value) {
+        const rightNow = new Date();
+        const utc1 = Date.UTC(rightNow.getFullYear(), rightNow.getMonth(), rightNow.getDate());
+        if (value === 'Week') {
+            const d = newData.filter(item => {
+                let utc2 = Date.UTC(item.date.getFullYear(), item.date.getMonth(), item.date.getDate());
+                let diffDays = Math.floor((utc1 - utc2) / (1000 * 60 * 60 * 24));
+                if (diffDays <= 7) {
+                    return true;
+                }
+            });
+            return d;
         }
-        else if (value === 'Distance') {
-            const newData = this.state.data.sort(this.sortByDistance);
-            console.log(newData);
-            this.setState({ data: newData });
+        else if (value === 'Month') {
+            const d = newData.filter(item => {
+                if (rightNow.getUTCMonth() === item.date.getUTCMonth() && rightNow.getUTCFullYear() === item.date.getUTCFullYear()) {
+                    return true;
+                }
+            });
+            return d;
         }
-        else if (value === 'Pace') {
-            const newData = this.state.data.sort(this.sortByPace);
-            this.setState({ data: newData });
+        else if (value === 'Year') {
+            const d = newData.filter(item => {
+                if (rightNow.getUTCFullYear() === item.date.getUTCFullYear()) {
+                    return true;
+                }
+            });
+            return d;
         }
-        else if (value === 'Date') {
-            const newData = this.state.data.sort(this.sortByDate);
-            this.setState({ data: newData });
+        else {
+            return newData;
         }
+    }
+
+    sortData(newData, value) {
+        if (this.props.activites.length > 1) {
+            if (value === 'Duration') {
+                newData = this.props.activites.sort(this.sortByDuration);
+            }
+            else if (value === 'Distance') {
+                newData = this.props.activites.sort(this.sortByDistance);
+            }
+            else if (value === 'Pace') {
+                newData = this.props.activites.sort(this.sortByPace);
+            }
+            else if (value === 'Date') {
+                newData = this.props.activites.sort(this.sortByDate);
+            }
+            else {
+                newData = this.props.activites;
+            }
+        }
+        else {
+            newData = this.props.activites;
+        }
+        return newData
     }
 
     viewChange(value) {
         this.setState({ view: value });
-        this.filterData(value);
     }
 
     sortedChange(value) {
         this.setState({ sorted: value });
-        this.sortData(value);
     }
 
     rangeChange(value) {
