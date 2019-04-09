@@ -11,4 +11,9 @@ export default mainStyles = StyleSheet.create({
         justifyContent: 'center',
         padding: 5
     },
+    infoContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }
 });

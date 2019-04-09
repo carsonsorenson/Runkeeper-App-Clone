@@ -43,7 +43,7 @@ export default mainStyles = StyleSheet.create({
         alignItems: 'center',
     },
     summaryText: {
-        fontSize: 32,
+        fontSize: 24,
         fontWeight: '100',
         alignSelf: 'center'
     },

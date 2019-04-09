@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Picker, Text, CardItem, Card, Left, H2, Right } from 'native-base';
+import { Picker, Text, CardItem, Card, Left, H2, Right, H3 } from 'native-base';
 import { connect } from 'react-redux';
 import { View, FlatList } from 'react-native';
 import styles from '../styles/listStyles';
@@ -196,21 +196,32 @@ class ActivityHistoryList extends Component {
                             </H2>
                         </Right>
                     </CardItem>
-                    <CardItem>
-                        <Text>
-                            Distance: {formatDistance(item.distance).toString()}
-                        </Text>
-                    </CardItem>
-                    <CardItem>
-                        <Text>
-                            Pace: {formatValue(item.pace).toString()}
-                        </Text>
-                    </CardItem>
-                    <CardItem>
-                        <Text>
-                            Time: {formatValue(item.time).toString()}
-                        </Text>
-                    </CardItem>
+                    <View style={styles.row}>
+                        <View style={styles.infoContainer}>
+                            <H3>
+                                Distance
+                            </H3>
+                            <Text>
+                                {formatDistance(item.distance).toString()}
+                            </Text>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <H3>
+                                Pace
+                            </H3>
+                            <Text>
+                                {formatValue(item.pace).toString()}
+                            </Text>
+                        </View>
+                        <View style={styles.infoContainer}>
+                            <H3>
+                                Time
+                            </H3>
+                            <Text>
+                                {formatValue(item.time).toString()}
+                            </Text>
+                        </View>
+                    </View>
                 </Card>
             </TouchableOpacity>
         )

@@ -30,7 +30,7 @@ class PersonalBests extends Component {
                     <CardItem bordered>
                         <Left>
                             <Text>
-                                Longest time:
+                                Duration:
                             </Text>
                         </Left>
                         <Right>
@@ -73,7 +73,7 @@ class PersonalBests extends Component {
                     <CardItem bordered>
                         <Left>
                             <Text>
-                                Longest Distance (miles):
+                                Distance (miles):
                             </Text>
                         </Left>
                         <Right>
