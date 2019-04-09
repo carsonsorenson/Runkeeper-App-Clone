@@ -11,8 +11,8 @@ class MapWithPath extends Component {
         this.state = {
             latitude: null,
             longitude: null,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+            latitudeDelta: 0.02305,
+            longitudeDelta: 0.02085,
         }
     }
 

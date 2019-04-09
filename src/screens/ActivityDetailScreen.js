@@ -184,7 +184,6 @@ class ActivityDetailScreen extends Component {
     }
 
     render() {
-        console.log(this.state.loading);
         return (
             this.state.loading ? this.renderSpinner() : this.renderActivity()
         )

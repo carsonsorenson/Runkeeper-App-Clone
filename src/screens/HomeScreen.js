@@ -7,9 +7,11 @@ import Activity from '../components/Activity';
 import { connect } from 'react-redux';
 import { setCoords } from '../redux/actions/locationActions';
 import { updateBests } from '../redux/actions/rewardsActions';
+import { setActivites } from '../redux/actions/activitiesActions';
 import weatherService from '../services/weather.service';
 import styles from '../styles/mainStyles';
 import navigationService from '../services/NavigationService';
+import dataController from '../services/DataController';
 
 class HomeScreen extends Component {
     static navigationOptions = {
@@ -22,7 +24,11 @@ class HomeScreen extends Component {
 
         this.state = {
             weather: null,
-            activity: 'Running'
+            activity: 'Running',
+            loading: true,
+            loadingWeather: true,
+            loadingGPS: true,
+            loadingStorage: true
         }
     }
 
@@ -64,15 +70,34 @@ class HomeScreen extends Component {
     updateWeather() {
         weatherService.getWeather(this.props.latitude, this.props.longitude)
         .then(results => {
-            this.setState({weather: results});
+            this.setState({
+                weather: results,
+                loadingWeather: false
+            });
         })
         .catch(error => {
             console.log(error);
         })
     }
 
+    getActivities() {
+        dataController.getAllActivities()
+            .then(result => {
+                this.setState({
+                    loadingStorage: false
+                })
+                this.props.dispatchSetActivites(result);
+            })
+            .catch(error => {
+                console.log('error', error)
+                this.setState({loadingStorage: false});
+            })
+    }
+
     componentDidMount() {
+        this.getActivities();
         if (this.props.latitude !== null && this.props.longitude !== null) {
+            this.setState({loadingGPS: false});
             this.updateWeather();
         }
         this.requestLocationPermission();
@@ -81,10 +106,14 @@ class HomeScreen extends Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.latitude !== prevProps.latitude || this.props.longitude !== prevProps.longitude) {
+            this.setState({loadingGPS: false});
             this.updateWeather();
         }
         if (this.props.activities !== prevProps.activites) {
             this.props.dispatchUpdateBests(this.props.activites);
+        }
+        if (this.state.loadingGPS === false && this.state.loadingStorage === false && this.state.loadingWeather === false && this.state.loading === true) {
+            this.setState({loading: false});
         }
     }
 
@@ -106,10 +135,10 @@ class HomeScreen extends Component {
     }
 
     render() {
-        if (this.props.latitude !== null && this.props.longitude !== null) {
+        if (this.state.loading === false) {
             return (
                 <Container style={styles.container}>
-                    <Map/>
+                    <Map />
                     <View style={{margin: 10}}>
                         <Activity set={(activity) => this.setActivity(activity)} />
                         <Weather weather={this.state.weather} />
@@ -146,7 +175,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         dispatchUpdateBests: (activities) => dispatch(updateBests(activities)),
-        dispatchSetCoords: (lat, lon) => dispatch(setCoords(lat, lon))
+        dispatchSetCoords: (lat, lon) => dispatch(setCoords(lat, lon)),
+        dispatchSetActivites: (activites) => dispatch(setActivites(activites))
     }
 }
 

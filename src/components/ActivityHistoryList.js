@@ -92,7 +92,8 @@ class ActivityHistoryList extends Component {
         const utc1 = Date.UTC(rightNow.getFullYear(), rightNow.getMonth(), rightNow.getDate());
         if (value === 'Week') {
             const d = newData.filter(item => {
-                let utc2 = Date.UTC(item.date.getFullYear(), item.date.getMonth(), item.date.getDate());
+                let date = new Date(item.date);
+                let utc2 = Date.UTC(item.date.getFullYear(), date.getMonth(), date.getDate());
                 let diffDays = Math.floor((utc1 - utc2) / (1000 * 60 * 60 * 24));
                 if (diffDays <= 7) {
                     return true;
@@ -102,7 +103,8 @@ class ActivityHistoryList extends Component {
         }
         else if (value === 'Month') {
             const d = newData.filter(item => {
-                if (rightNow.getUTCMonth() === item.date.getUTCMonth() && rightNow.getUTCFullYear() === item.date.getUTCFullYear()) {
+                let date = new Date(item.date);
+                if (rightNow.getUTCMonth() === date.getUTCMonth() && rightNow.getUTCFullYear() === date.getUTCFullYear()) {
                     return true;
                 }
             });
@@ -110,7 +112,8 @@ class ActivityHistoryList extends Component {
         }
         else if (value === 'Year') {
             const d = newData.filter(item => {
-                if (rightNow.getUTCFullYear() === item.date.getUTCFullYear()) {
+                let date = new Date(item.date);
+                if (rightNow.getUTCFullYear() === date.getUTCFullYear()) {
                     return true;
                 }
             });
@@ -175,7 +178,8 @@ class ActivityHistoryList extends Component {
     }
 
     renderActivity = ({ item, index }) => {
-        const d = `${item.date.getMonth() + 1}/${item.date.getDate()}/${item.date.getFullYear()}`;
+        let date = new Date(item.date);
+        const d = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
         return (
             <TouchableOpacity onPress={() => navigationService.navigate('ActivityDetailScreen', {id: item.id})}>
                 <Card>
