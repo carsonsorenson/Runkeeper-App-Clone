@@ -93,7 +93,7 @@ class ActivityHistoryList extends Component {
         if (value === 'Week') {
             const d = newData.filter(item => {
                 let date = new Date(item.date);
-                let utc2 = Date.UTC(item.date.getFullYear(), date.getMonth(), date.getDate());
+                let utc2 = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
                 let diffDays = Math.floor((utc1 - utc2) / (1000 * 60 * 60 * 24));
                 if (diffDays <= 7) {
                     return true;

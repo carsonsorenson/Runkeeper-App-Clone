@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, Spinner, H2 } from 'native-base';
-import { View, Alert } from 'react-native';
+import { View, Alert, Image } from 'react-native';
 import { connect } from 'react-redux';
 import SummaryBar from '../components/SummaryBar';
 import styles from '../styles/activityStyles';
@@ -138,8 +138,38 @@ class ActivityDetailScreen extends Component {
         }
         return data;
     }
+
+    renderImage() {
+        if (this.state.activity.image !== null) {
+            return (
+                <View style={styles.feelingPageContainer}>
+                    <View style={[styles.endSummary, {justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}]}>
+                        <H2>
+                            Your Image
+                        </H2>
+                        <Image
+                            source={{uri: this.state.activity.image}}
+                            style={{height: 200, width: 300, alignSelf: 'center'}}
+                        />
+                    </View>
+                </View>
+            )
+        }
+        else {
+            return (
+                <View style={styles.feelingPageContainer}>
+                    <View style={[styles.endSummary, {justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}]}>
+                        <H2>
+                            No image found
+                        </H2>
+                    </View>
+                </View>
+            )
+        }
+    }
     
     renderActivity() {
+        console.log(this.state.activity);
         return (
             <View style={{flex: 1}}>
                 <View style={styles.feelingPageContainer}>
@@ -165,13 +195,7 @@ class ActivityDetailScreen extends Component {
                     time={this.state.activity.time}
                     pace={this.state.activity.pace}
                 />
-                <View style={styles.feelingPageContainer}>
-                    <View style={styles.endSummary}>
-                        <H2>
-                            Put image here
-                        </H2>
-                    </View>
-                </View>
+                {this.renderImage()}
                 {this.renderAwards()}
             </View>
         )
