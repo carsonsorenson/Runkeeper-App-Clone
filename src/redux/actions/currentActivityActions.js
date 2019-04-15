@@ -6,7 +6,7 @@ const uuid = require('uuid/v1');
 export {
     SET_ACTIVITY,
     START_ACTIVITY,
-    UPDATE_POSITION
+    UPDATE_POSITION,
 }
 
 export function saveImage(image) {
@@ -61,7 +61,16 @@ export function updatePosition(latitude, longitude) {
     }
 }
 
-export function initializeActivity(initialLatitude, initialLongitude, activity, w) {
+export function updateElevation(elevation) {
+    return {
+        type: SET_ACTIVITY,
+        payload: {
+            differenceElevation: elevation
+        }
+    }
+}
+
+export function initializeActivity(initialLatitude, initialLongitude, activity, w, elevation) {
     let weather = {
         description: w.description,
         icon: w.getIcon(),
@@ -76,6 +85,7 @@ export function initializeActivity(initialLatitude, initialLongitude, activity, 
         position,
         activity,
         weather,
+        elevation,
         id: uuid()
     }
 }

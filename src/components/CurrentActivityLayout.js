@@ -46,6 +46,14 @@ export default class Measurements extends Component {
             <View style={styles.container}>
                 <View style={styles.row}>
                     <Text style={styles.bigText}>
+                        {formatDistance(this.props.distance)}
+                    </Text>
+                    <H3 style={{alignSelf: 'center'}}>
+                        Miles
+                    </H3>
+                </View>
+                <View style={styles.row}>
+                    <Text style={styles.bigText}>
                         {formatValue(this.props.time)}
                     </Text>
                     <H3 style={{alignSelf: 'center'}}>
@@ -54,10 +62,10 @@ export default class Measurements extends Component {
                 </View>
                 <View style={styles.row}>
                     <Text style={styles.bigText}>
-                        {formatDistance(this.props.distance)}
+                        {this.props.elevation.toFixed(2)}
                     </Text>
                     <H3 style={{alignSelf: 'center'}}>
-                        Miles
+                        Elevation Tracker (feet)
                     </H3>
                 </View>
                 <View style={styles.row}>

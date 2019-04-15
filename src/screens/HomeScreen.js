@@ -54,8 +54,11 @@ class HomeScreen extends Component {
     startGps() {
         this.gpsId = navigator.geolocation.watchPosition(
             (position) => {
-                console.log(position);
-                this.props.dispatchSetCoords(position.coords.latitude, position.coords.longitude);
+                this.props.dispatchSetCoords(
+                    position.coords.latitude,
+                    position.coords.longitude,
+                    position.coords.altitude
+                );
             },
             (error) => console.log("error: ", error.message),
             {
@@ -175,7 +178,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         dispatchUpdateBests: (activities) => dispatch(updateBests(activities)),
-        dispatchSetCoords: (lat, lon) => dispatch(setCoords(lat, lon)),
+        dispatchSetCoords: (lat, lon, elevation) => dispatch(setCoords(lat, lon, elevation)),
         dispatchSetActivites: (activites) => dispatch(setActivites(activites))
     }
 }

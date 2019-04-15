@@ -18,7 +18,7 @@ export default mainStyles = StyleSheet.create({
         alignItems: 'center',
     },
     bigText: {
-        fontSize: 60,
+        fontSize: 50,
         fontWeight: '100',
         alignSelf: 'center'
     },

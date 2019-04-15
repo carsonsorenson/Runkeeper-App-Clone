@@ -169,7 +169,6 @@ class ActivityDetailScreen extends Component {
     }
     
     renderActivity() {
-        console.log(this.state.activity);
         return (
             <View style={{flex: 1}}>
                 <View style={styles.feelingPageContainer}>

@@ -3,6 +3,7 @@ import { SET_COORDS } from '../actions/locationActions';
 let initialState = {
     latitude: null,
     longitude: null,
+    elevation: null
 }
 
 export default function(state = initialState, action) {
@@ -11,7 +12,8 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 latitude: action.lat,
-                longitude: action.lon
+                longitude: action.lon,
+                elevation: action.elevation
             }
         default:
             return state;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BackHandler, Alert, Button } from 'react-native';
 import { connect } from 'react-redux';
-import { initializeActivity, updateDistance, updatePace, pause, updateTime, updatePosition } from '../redux/actions/currentActivityActions';
+import { initializeActivity, updateDistance, updatePace, pause, updateTime, updatePosition, updateElevation } from '../redux/actions/currentActivityActions';
 import CurrentActivityLayout from '../components/CurrentActivityLayout';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import navigationService from '../services/NavigationService';
@@ -71,7 +71,8 @@ class OngoingActivityScreen extends Component {
             this.props.latitude,
             this.props.longitude,
             this.props.navigation.getParam("activity"),
-            this.props.navigation.getParam("weather")
+            this.props.navigation.getParam("weather"),
+            this.props.elevation
         )
         this.play();
     }
@@ -120,6 +121,11 @@ class OngoingActivityScreen extends Component {
         }
     }
 
+    calculateElevation() {
+        var elevationInFeet = (this.props.elevation - this.props.currentActivity.elevation) * 3.28084;
+        this.props.dispatchUpdateElevation(elevationInFeet);
+    }
+
     toRadians(v) {
         return v * Math.PI / 180;
     }
@@ -133,6 +139,9 @@ class OngoingActivityScreen extends Component {
             if (this.props.currentActivity.time !== prevProps.currentActivity.time) {
                 this.calculatePace();
             }
+            if (this.props.elevation !== prevProps.elevation) {
+                this.calculateElevation();
+            }
         }
     }
 
@@ -143,6 +152,7 @@ class OngoingActivityScreen extends Component {
                 distance={this.props.currentActivity.distance}
                 pace={this.props.currentActivity.pace}
                 paused={this.props.currentActivity.paused}
+                elevation={this.props.currentActivity.differenceElevation}
                 play={() => this.play()}
                 pause={() => this.pause()}
                 stop={() => this.stop()}
@@ -160,18 +170,20 @@ function mapStateToProps(state) {
     return {
         latitude: state.locationReducer.latitude,
         longitude: state.locationReducer.longitude,
+        elevation: state.locationReducer.elevation,
         currentActivity: state.currentActivityReducer,
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        dispatchInitializeActivity: (lat, lon, activity, weather) => dispatch(initializeActivity(lat, lon, activity, weather)),
+        dispatchInitializeActivity: (lat, lon, activity, weather, elevation) => dispatch(initializeActivity(lat, lon, activity, weather, elevation)),
         dispatchUpdateDistance: (dis) => dispatch(updateDistance(dis)),
         dispatchPause: (isPaused) => dispatch(pause(isPaused)),
         dispatchUpdatePace: (pace) => dispatch(updatePace(pace)),
         dispatchUpdateTime: (time) => dispatch(updateTime(time)),
-        dispatchUpdatePosition: (lat, lon) => dispatch(updatePosition(lat, lon))
+        dispatchUpdatePosition: (lat, lon) => dispatch(updatePosition(lat, lon)),
+        dispatchUpdateElevation: (elevation) => dispatch(updateElevation(elevation))
     }
 }
 

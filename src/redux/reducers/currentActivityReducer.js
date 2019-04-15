@@ -11,7 +11,9 @@ let initialState = {
     finalWeather: null,
     feeling: 1,
     image: null,
-    paused: false
+    paused: false,
+    elevation: null,
+    differenceElevation: 0
 };
 
 export default function(state = initialState, action) {
@@ -22,6 +24,7 @@ export default function(state = initialState, action) {
                 position: [action.position],
                 activity: action.activity,
                 initialWeather: action.weather,
+                elevation: action.elevation,
                 id: action.id
             }
         case SET_ACTIVITY:
