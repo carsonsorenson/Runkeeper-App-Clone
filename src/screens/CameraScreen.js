@@ -109,7 +109,10 @@ class CameraScreen extends Component {
     takePicture = async function() {
         if (this.camera) {
             try {
-                const options = { quality: 0.5, base64: true };
+                const options = { 
+                    quality: 0.5,
+                    base64: true,
+                };
                 const data = await this.camera.takePictureAsync(options);
                 this.setState({ path: data.uri });
             } catch(error) {

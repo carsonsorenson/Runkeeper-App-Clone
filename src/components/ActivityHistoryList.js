@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from 'react-native';
-import { Picker, Text, CardItem, Card, Left, H2, Right, H3 } from 'native-base';
+import { Picker, Text, CardItem, Card, Left, H2, Right, H3, Button } from 'native-base';
 import { connect } from 'react-redux';
 import { View, FlatList } from 'react-native';
 import styles from '../styles/listStyles';
@@ -18,39 +18,41 @@ class ActivityHistoryList extends Component {
             sorted: "Date",
             range: "All",
             data: [],
+            icon: "arrow-up",
+            sortVal: 1
         }
     }
 
-    sortByDuration(a, b) {
-        if (a.time > b.time)
-            return -1;
+    sortByDuration = num => (a, b) => {
         if (a.time < b.time)
-            return 1;
+            return num;
+        if (a.time > b.time)
+            return num * -1;
         return 0
     }
     
-    sortByDistance(a, b) {
-        if (a.distance > b.distance)
-            return -1;
+    sortByDistance = num => (a, b) => {
         if (a.distance < b.distance)
-            return 1;
+            return num;
+        if (a.distance > b.distance)
+            return num * -1;
         return 0
     }
 
-    sortByPace(a, b) {
+    sortByPace = (num) => (a, b) => {
         if (a.pace < b.pace)
-            return -1;
+            return num;
         if (a.pace > b.pace)
-            return 1;
+            return num * -1;
         return 0
     }
 
-    sortByDate(a, b) {
+    sortByDate = (num) => (a, b) => {
         if (a.date < b.date) {
-            return - 1;
+            return num;
         }
         if (a.date > b.date) {
-            return 1;
+            return  num * -1;
         }
         return 0;
     }
@@ -67,6 +69,11 @@ class ActivityHistoryList extends Component {
         }
         else if (this.state.view !== prevState.view || this.state.sorted !== prevState.sorted || this.state.range !== prevState.range) {
             this.arrange();
+        }
+        else if (this.state.sortVal !== prevState.sortVal) {
+            let newData = []
+            newData = this.sortData(newData, this.state.sorted);
+            this.setState({data: newData});
         }
     }
 
@@ -127,16 +134,16 @@ class ActivityHistoryList extends Component {
     sortData(newData, value) {
         if (this.props.activites.length > 1) {
             if (value === 'Duration') {
-                newData = this.props.activites.sort(this.sortByDuration);
+                newData = this.props.activites.sort(this.sortByDuration(this.state.sortVal));
             }
             else if (value === 'Distance') {
-                newData = this.props.activites.sort(this.sortByDistance);
+                newData = this.props.activites.sort(this.sortByDistance(this.state.sortVal));
             }
             else if (value === 'Pace') {
-                newData = this.props.activites.sort(this.sortByPace);
+                newData = this.props.activites.sort(this.sortByPace(this.state.sortVal));
             }
             else if (value === 'Date') {
-                newData = this.props.activites.sort(this.sortByDate);
+                newData = this.props.activites.sort(this.sortByDate(this.state.sortVal));
             }
             else {
                 newData = this.props.activites;
@@ -235,6 +242,21 @@ class ActivityHistoryList extends Component {
         )
     }
 
+    orderSwitched() {
+        if (this.state.icon === "arrow-up") {
+            this.setState({
+                icon: "arrow-down",
+                sortVal: -1
+            })
+        }
+        else {
+            this.setState({
+                icon: "arrow-up",
+                sortVal: 1
+            })
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -269,6 +291,13 @@ class ActivityHistoryList extends Component {
                         <Picker.Item label="Distance" value="Distance" />
                         <Picker.Item label="Duration" value="Duration" />
                     </Picker>
+                    <Button style={{backgroundColor: 'white'}} onPress={() => this.orderSwitched()}>
+                        <Icon
+                            name={this.state.icon}
+                            color="black"
+                            size={20}
+                        />
+                    </Button>
                 </View>
                 <View style={styles.row}>
                     <Text>
