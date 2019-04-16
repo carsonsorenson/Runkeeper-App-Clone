@@ -12,6 +12,7 @@ import weatherService from '../services/weather.service';
 import styles from '../styles/mainStyles';
 import navigationService from '../services/NavigationService';
 import dataController from '../services/DataController';
+import SplashScreen from 'react-native-splash-screen';
 
 class HomeScreen extends Component {
     static navigationOptions = {
@@ -116,6 +117,7 @@ class HomeScreen extends Component {
             this.props.dispatchUpdateBests(this.props.activites);
         }
         if (this.state.loadingGPS === false && this.state.loadingStorage === false && this.state.loadingWeather === false && this.state.loading === true) {
+            SplashScreen.hide();
             this.setState({loading: false});
         }
     }
