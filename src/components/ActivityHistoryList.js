@@ -18,8 +18,8 @@ class ActivityHistoryList extends Component {
             sorted: "Date",
             range: "All",
             data: [],
-            icon: "arrow-up",
-            sortVal: 1
+            icon: "arrow-down",
+            sortVal: -1
         }
     }
 
@@ -48,10 +48,12 @@ class ActivityHistoryList extends Component {
     }
 
     sortByDate = (num) => (a, b) => {
-        if (a.date < b.date) {
+        a_date = new Date(a.date);
+        b_date = new Date(b.date);
+        if (a_date < b_date) {
             return num;
         }
-        if (a.date > b.date) {
+        if (a_date > b_date) {
             return  num * -1;
         }
         return 0;
@@ -60,7 +62,7 @@ class ActivityHistoryList extends Component {
 
     componentDidMount() {
         this.setState({data: this.props.activites});
-        this.arrange();
+        this.arrange()
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -71,17 +73,19 @@ class ActivityHistoryList extends Component {
             this.arrange();
         }
         else if (this.state.sortVal !== prevState.sortVal) {
-            let newData = []
-            newData = this.sortData(newData, this.state.sorted);
-            this.setState({data: newData});
+            this.arrange();
         }
     }
 
     arrange() {
         let newData = []
         newData = this.sortData(newData, this.state.sorted);
+        console.log(newData)
         newData = this.filterData(newData, this.state.view);
+        console.log(newData)
         newData = this.filterDate(newData, this.state.range);
+        console.log(newData)
+        console.log('done sorting');
         this.setState({data: newData});
     }
 

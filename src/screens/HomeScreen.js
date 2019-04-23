@@ -127,7 +127,6 @@ class HomeScreen extends Component {
     }
 
     componentWillUnmount() {
-        console.log('here!!! in component will unmount');
         navigator.geolocation.clearWatch(this.gpsID);
     }
 
