@@ -80,12 +80,8 @@ class ActivityHistoryList extends Component {
     arrange() {
         let newData = []
         newData = this.sortData(newData, this.state.sorted);
-        console.log(newData)
         newData = this.filterData(newData, this.state.view);
-        console.log(newData)
         newData = this.filterDate(newData, this.state.range);
-        console.log(newData)
-        console.log('done sorting');
         this.setState({data: newData});
     }
 
